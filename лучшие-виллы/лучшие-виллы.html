@@ -1,0 +1,292 @@
+<div class="block-width" ng-controller="VillaSearchCtrl" onbeforeunload=="clearLocalStorage()">
+    <!-- <div ng-view></div> -->
+    <!-- <loading ng-show="loading"></loading> -->
+    <div ng-show="loading" id="loader-wrapper"><div id="loader"></div></div>
+    <div class="block-info" ng-show="!loading">
+        <div class="block-width">
+        <ul class="breadcrumb">
+            <li>
+                <a href="http://arenda-vill.com/"><img src="/files/villa/globus.png"/></a>
+            </li>
+
+            <li>
+                <a href="/лучшие-виллы" class="active">Поиск вилл</a>
+            </li>
+
+        </ul>
+        </div>
+        <h1 class="heading-title v-line">Поиск вилл</h1>
+        <ul class="sort-filt">
+            <li data-type="left-bar">Фильтр</li>
+            <li>{{filteredVills.length}} объек{{endOfWord}}</li>
+            <li data-type="sort-by">Сортировка</li>
+        </ul>
+        <div class="left-bar">
+            <h3>Расположение:</h3>
+            <!--<button id="button-reset" class="button" ng-click="resetFilters()" ng-show="showResetButton">Сбросить фильтры</button>-->
+            <!-- <label class="arrow"></label> -->
+            <!-- button-label="Выберите регион" -->
+            <div    isteven-multi-select
+            selection-mode="multiple"
+            input-model="regions"
+            output-model="selectedRegion"
+            item-label="name"
+            max-height="200px"
+            output-properties="name"
+            helper-elements=""
+            tick-property="selected"
+            translation="localLang"
+            button-label="name"
+            max-labels=""
+            on-item-click="openSlt()">          
+        </div>
+
+
+        <label class="arrow"></label>
+        <select ng-init="selectedDir = '-- Все направления --'" ng-model="selectedDir" id="directionsSelect">
+            <option>-- Все направления --</option>
+            <option class="opt" ng-repeat="direction in arrDirections" value="{{direction.name}}" ng-show="direction.showDir">{{direction.name + '  (' + direction.villCount + ')'}}</option>
+        </select>
+        <div class="line"></div>
+        <label class="arrow"></label>
+        <select ng-init="selectedRoom = '-- Количество спален --'" ng-model="selectedRoom" id="roomsSelect">
+            <option>-- Количество спален --</option>
+            <option class="opt" ng-repeat="rCount in rCounts" value="{{rCount}}" ng-bind="rCount + '+'" ></option>
+        </select>
+        <label class="arrow"></label>
+        <select ng-init="selectedGuest = '-- Количество гостей --'" ng-model="selectedGuest" id="guestsSelect">
+            <option>-- Количество гостей --</option>
+            <option class="opt" ng-repeat="gCount in gCounts " value="{{gCount}}" ng-bind="gCount + '+'" ></option>
+        </select>
+        <div class="line"></div>
+        <div id="mob-filters">
+            <button class="button" data-type="choise-region"><a>Выберите регион</a></button>
+            <div class="choise-region">
+                <ul>
+                    <li>Карибы</li>
+                    <li>Азия</li>
+                    <li>Франция</li>
+                    <li>Испания</li>
+                    <li>Италия</li>
+                    <li>Шале</li>
+                    <li>Балканы</li>
+                    <div class="clearfix"></div>
+                </ul>
+            </div>
+            <button class="button" data-type="nth-bed"><a>Количество спален</a></button>
+            <div class="nth-bed">
+                <ul>
+                    <li>Карибы</li>
+                    <li>Азия</li>
+                    <li>Франция</li>
+                    <li>Испания</li>
+                    <li>Италия</li>
+                    <li>Шале</li>
+                    <li>Балканы</li>
+                    <div class="clearfix"></div>
+                </ul>
+            </div>
+            <button class="button" data-type="nth-guess"><a>Количество гостей</a></button>
+            <div class="nth-guess">
+                <ul>
+                    <li>Максимум 6</li>
+                    <li>Максимум 13</li>
+                    <li>Максимум 20</li>
+                    <li>Максимум 27</li>
+                    <li>Максимум 34</li>
+                    <li>Максимум 44</li>
+                    <div class="clearfix"></div>
+                </ul>
+            </div>
+        </div>
+        <div class="price">
+            <p>Цена:</p>
+            <span></span>
+            <form action="#" method="post">
+                <div class="formCost">
+                    <input type="text" id="minCost" ng-init="minPrice" ng-value="minPrice" ng-model="selectedMinPrice">
+                    <input type="text" id="maxCost" ng-init="maxPrice" ng-value="maxPrice" ng-model="selectedMaxPrice">
+                </div>
+                <div class="clearfix"></div>
+                <div class="sliderCont">
+                    <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
+                        <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 0%;"></a>
+                        <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 100%;"></a></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+            <div class="line"></div>
+            <p>Тип отдыха:</p>
+            <section class="content">
+              <ul class="list">
+                <li class="list__item" ng-repeat="recreationStyle in recreationStyles">
+                  <label class="label--checkbox">
+                    <input type="checkbox" class="checkbox" ng-click="setRecreationStyle(recreationStyle,check[$index])" ng-model="check[$index]" >{{recreationStyle}}
+                </label>
+            </li>
+        </ul>
+        <ul class="mob-list">
+            <li ng-repeat="recreationStyle in recreationStyles" ng-click="setRecreationStyle(recreationStyle)" ng-model="selectedRecreationStyle" >{{recreationStyle}}
+
+            </li>
+
+        </ul>
+    </section>
+    <div class="line"></div>
+    <p>Особые удобства:</p>
+    <section class="content">
+      <ul class="list">
+        <li class="list__item" ng-repeat="specBenefit in specialStaticBenefitsArr">
+          <label class="label--checkbox">
+            <input type="checkbox" class="checkbox" 
+            ng-click="setSpecBenefit(specBenefit,checkBenefit[$index])" 
+            ng-model="checkBenefit[$index]"> {{specBenefit}}
+        </label>
+    </li>
+</ul>
+<li><input id="button-search"  type="text" ng-model="searchValue" placeholder=" Поиск"></li>
+    <button id="button-reset" class="button" ng-click="resetFilters()" ng-show="showResetButton">Сбросить фильтры</button>
+<ul class="mob-list">
+  <li>Бассейн</li>
+  <li>У моря</li>
+  <li>Камин</li>
+  <li>Подъёмник</li>
+  <li>Вертолет</li>
+  <li>Офис-зона</li>
+  <li>Охрана</li>
+  <li>Причал</li>
+  <li>Гараж</li>
+</ul>
+<div class="div-lst-btn">
+<button class="button last-btn" data-type="left-bar" href="#content"><a>Подтвердить</a></button>
+</div>
+</section>
+</div>
+
+<div id="liked" class="blocks">
+    <ul class="sort-by">
+        <li><a><h5>Сортировка по:</h5></a></li>
+        <li>
+            <a  ng-click="orderByField='min_price'; reverseSort = !reverseSort">Цене</a>
+            <span class="arrow-icons" ng-show="orderByField == 'min_price'">
+                <i ng-show="reverseSort;" class="arrow-vertical-top"></i>
+                <i ng-show="!reverseSort;" class="arrow-vertical-bottom"></i>
+            </span>
+        </li>
+        <!-- ng-class='{"active-sort":tog==2}' ng-click='tog=2' -->
+        <li >
+            <a ng-click="orderByField='r_counter'; reverseSort = !reverseSort">Кол-ву спален
+            </a>
+            <span class="arrow-icons" ng-show="orderByField == 'r_counter'">
+                <i ng-show="reverseSort;" class="arrow-vertical-top"></i>
+                <i ng-show="!reverseSort;" class="arrow-vertical-bottom"></i>
+            </span>
+        </li>
+        <li>
+            <a ng-click="orderByField='best'; reverseSort = !reverseSort">Популярности</a>
+            <span class="arrow-icons" ng-show="orderByField == 'best'">
+                <i ng-show="reverseSort;" class="arrow-vertical-top"></i>
+                <i ng-show="!reverseSort;" class="arrow-vertical-bottom"></i>
+            </span>
+        </li>
+        <!--<li>
+            <a ng-click="orderByField='date_of_add'; reverseSort = !reverseSort">Дате добавления</a>
+            <span class="arrow-icons" ng-show="orderByField == 'date_of_add'">
+                <i ng-show="reverseSort;" class="arrow-vertical-top"></i>
+                <i ng-show="!reverseSort;" class="arrow-vertical-bottom"></i>
+            </span>
+        </li>-->
+        
+        <div class="clearfix"></div>
+    </ul>
+    <ul class="sort">
+        <li><a><h5>Вид:</h5></a></li>
+        <li><a></a></li>
+        <li class="active-tab"><a></a></li>
+        <div class="clearfix"></div>
+    </ul>
+    <div class="zero-result" ng-if="filterResult.length == 0">
+        <h3>Нет подходящих вилл</h3>
+    </div>
+
+    <div class="w70" ng-if="villa.name" ng-repeat="villa in filteredVills = ( vills | orderBy:orderByField:reverseSort |filter:byRegion |
+    filter:byDirection|
+    filter:byRoom |
+    filter:byGuest | 
+    filter:byMinPrice | 
+    filter:bySearch |
+    filter:bySpecBenefit | 
+    filter:byMaxPrice |
+    filter:byRecreationStyle)
+   as filterResult track by villa.field_value_id" >
+    <p class="w70">
+        <img ng-src={{::villa.img}} 
+        class="openImage none" w="1500" h="1500" gallery="{{type + $index}}" on-finish-render="ngRepeatFinished" />
+        <span class="like-villa" data-toggle="liked" ng-class="{'active-like': isFav(villa.field_value_id) == true }" ng-click="addFav(villa.field_value_id, $event); ">
+        <!--<img ng-src="{{thumb}}" class="openImage none gallery-thumbnails" gallery="{{type + $parent.$index}}" w="1500" h="1500" ng-repeat="thumb in villa.gallery">-->
+    </span>
+</p>
+<div class="w30 villa-pointer" ng-click="showVillaInfo(villa)">
+    <div class="villa-name">
+        <span ng-bind="::villa.name"></span>
+    </div>
+    <ul>
+        <li ng-bind="::villa.f8[0].f1"></li>
+        <li ng-class="{'casper': villa.r_counter == ''}">{{villa.r_counter}} спал{{villa.r_counter | endOfWordBedrooms}}</li>
+        <li ng-class="{'casper': villa.person_counter == ''}">{{villa.person_counter}} гост{{ villa.person_counter | endOfWordGuests}}</li>
+        <div class="clerfix"></div>
+    </ul>
+    <div class="color-line"></div>
+    <span>Цена за сутки:</span>
+    <p ng-bind="villa.priceStr"></p>
+    <button class="button-arrow" ng-click="showVillaInfo(villa)"><a>подробнее</a></button>
+    <button class="button-add"><a>Добавить в заявку</a></button>
+    <div class="clearfix"></div>
+</div>
+</div>
+<div class="clearfix"></div>
+</div>
+</div>
+
+</div>
+
+
+<!-- SLIDER -->
+<div id="ovo-gallery-cover" class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
+    <div class="pswp__scroll-wrap">
+        <div class="pswp__container" ng-swipe-right="modalSlide()">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

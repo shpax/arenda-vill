@@ -1,0 +1,50 @@
+<div class="block-width" ng-controller="directionsController">
+    <div class="search">
+        <span class="icon-search"></span>
+        <input type="text" style="color:black;" placeholder="Поиск виллы по ID или по названию..." ng-keypress="checkIfEnterKeyWasPressed($event)"
+                          ng-model="selectedAddress" ng-click="setSearchValueEmpty()" ng-change="setSearchValueText()" ng-blur="setSearchValueText()"/>
+    </div>
+    <button ng-click="goToSearchPage()"><a>Найти</a></button>
+    <ul class="villa-search-result-list" ng-show="result.length > 0">
+        <li class="villa-search-result-list-item" ng-repeat="villa in vills | filter:searchResult as result" ><a href="http://{{villa.url}}" ng-bind="villa.name + ', ' + villa.f8[0].f1"></a></li>
+        </ul>
+        
+	<div class="block-info">
+        <ul class="breadcrumb">
+            <li>
+                <a href="http://arenda-vill.com/"><img src="/files/villa/globus.png"/></a>
+            </li>
+
+            <li>
+                <a href="http://arenda-vill.ovobox.com/аренда-виллы-на-море" class="active">Направления</a>
+            </li>
+
+        </ul>
+		<h1 class="heading-title v-line">
+		Направления
+		<!--<span class="vertical-line"></span>-->
+		<!--<span class="vertical-line"></span>-->
+		</h1>
+
+    	<div class="region-block" ng-repeat="region in regions track by $index">
+    		<div class="img-block">
+
+    			<div class="table">
+    			    <div class="table-cell">
+    			        <div class="img" ng-class="regionsClasses[region.name]" ng-click="toTargetRegion(region)"></div>
+    			    </div>
+    			</div>
+    			<h2 ng-bind="::region.name"></h2>
+    		</div>
+    		<div class="info-block">
+    			<ul class="info-menu">
+    				<li ng-class="{'info-submenu': direction.isDirection}" ng-repeat="direction in region.directions track by $index">
+    					<span> 
+    						<a href="{{getUrl(direction.url)}}" ng-bind="::direction.name" ng-click="toTargetDirection(direction)"></a>
+    					</span>
+    				</li>
+    			</ul>
+    		</div>
+    	</div>
+	</div>
+</div>

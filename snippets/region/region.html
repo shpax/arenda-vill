@@ -1,0 +1,167 @@
+<div ng-controller="regionCtrl" ng-cloak>
+    <div id="head">
+        <div class="block-width-small">
+            <div class="block-info">
+                <h1>Аренда Вилл {{pretext}} {{titleRegion}}</h1>
+                <p>Найдите и забронируйте виллу {{pretext}} {{titleRegion}} напрямую у владельца без наценки и комиссии</p>
+                <button class="locate-to"><a href="">Выбрать направление</a></button>
+                <button ng-click="locateToAbousUs()"><a>узнать больше</a></button>
+                <div class="clearfix"></div>
+            </div>
+            <!--<button class="button-round"><a href="#content-1" class="fa fa-angle-down"></a></button>-->
+            <a class="button button-round" href="#content-1">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </a>
+
+
+        </div>
+    </div>
+    <div id="content-2">
+        <div class="block-info">
+            <h1 class="heading-title v-line">Аренда виллы {{pretext}} {{titleRegion}} в 3 шага</h1>
+            <ul class="cd-gallery">
+                <li>
+                    <!--<a href="http://codyhouse.co/">-->
+                    <ul class="cd-item-wrapper">
+                        <li class="move-left">
+                            <div class="w30">
+                                <img src="/files/region/click_set_up-512.png"/>
+                                <p>Выберите подходящую виллу</p>
+                                <span></span>
+                                <p class="title-w30">Выберите интересное направление и подходящую виллу</p>
+                            </div>
+                        </li>
+
+                        <li class="selected" data-sale="true" data-price="$22">
+                            <div class="w30">
+
+                                <img src="/files/region/null.png"/>
+                                <p>
+                                    Без комиссии<br>
+                                    Без наценки<br>
+                                    Без сервисного<br>
+                                    сбора
+                                </p>
+                                <span></span>
+                                <p class="title-w30">Забронируйте виллу
+                                    напрямую у владельца</p>
+                            </div>
+                        </li>
+
+                        <li class="move-right">
+                            <div class="w30">
+                                <img src="/files/region/E-commerce_and_Shopping-22-512.png"/>
+                                <p>
+                                    Отправляйтеcь<br>
+                                    на отдых
+                                </p>
+                                <span></span>
+                                <p class="title-w30">Мы поможем вам не только удачно
+                                    подобрать виллу, но и забронировать
+                                    эксклюзивный перелет</p>
+                            </div>
+                        </li>
+                    </ul> <!-- cd-item-wrapper -->
+                    <!--</a>-->
+
+                    <!--<div class="cd-item-info">-->
+                    <!--	<b><a href="#0">Mountains</a></b>-->
+
+                    <!--	<em class="cd-price">$26</em>-->
+                    <!--</div> -->
+                </li>
+
+                <!-- other list items here -->
+            </ul> <!-- cd-gallery -->
+        </div>
+    </div>
+    <div id="content-1">
+        <div class="block-width">
+            <div class="block-info">
+                <h1 class="heading-title v-line">Аренда виллы {{pretext}} {{titleRegion}} в 3 шага</h1>
+                <div class="w30">
+                    <img src="/files/region/click_set_up-512.png"/>
+                    <p>
+                        Выберите
+                        подходящую
+                        виллу
+                    </p>
+                    <span></span>
+                </div>
+                <div class="w30 big">
+                    <img src="/files/region/null.png"/>
+                    <p>
+                        Без комиссии<br>
+                        Без наценки
+                        Без сервисного сбора
+                    </p>
+                    <span></span>
+                </div>
+                <div class="w30">
+                    <img src="/files/region/E-commerce_and_Shopping-22-512.png"/>
+                    <p>
+                        Отправляйтель
+                        на отдых
+                    </p>
+                    <span></span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="block-info" id="region">
+        <h1 class="heading-title v-line" ng-hide="directions.length == 0 &amp;&amp; directions2.length == 0">Выберите направление</h1>
+        <div id="map"></div>
+        <div id="reg-naprablen">
+            <div class="w30" ng-repeat="direct in directions" ng-hide="directions.length == 0">
+                <div class="caribian-block" style="background: rgba(0, 0, 0, 0) url({{direct.img}}) repeat scroll 0 0 / cover;">
+                    <div class="my"></div>
+                    <div class="info-block">
+                        <h2 class="after-line" ng-click="locateTo(direct.url)">{{direct.name}}</h2>
+                        <button class="arrow-more" ng-hide="direct.sub == undefined"><span></span></button>
+                    </div>
+                </div>
+                <div class="down">
+                    <div class="region__down" ng-repeat="s in direct.sub" style="background: url({{s.img}}) 0px 0px / cover repeat scroll rgba(0, 0, 0, 0);">
+                        <div class="my"></div>
+                        <div class="info-block">
+                            <p ng-click="locateTo(s.url)">{{s.name}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div class="block-width" id="best" ng-hide="currentVills.length == 0">
+        <div class="block-info">
+            <h1 class="heading-title v-line">Лучшие предложения</h1>
+            <div class="arrow-best-right" ng-click="incrementIndex()" ng-hide="currentVills.length < 4"></div>
+            <div class="arrow-best-left" ng-click="decrementIndex()" ng-hide="currentVills.length < 4"></div>
+            <div id="liked" class="blocks">
+                <div class="w70" ng-repeat="villa in currentVills | limitTo: 3 : index ">
+                    <p class="w70">
+                        <img src="{{'/api/data/table?t=428&field=f2&where[f1]=' + villa.field_value_id + '&where[f3]=yes&as=image&count=1'}}" ng-click="moreInfo(villa)"/>
+                        <span ng-class="villa.inFavourites ? 'active-like' : ''" ng-click="villa.inFavourites = setFavouriteVilla(villa.field_value_id, $event)"></span>
+                    </p>
+                    <div class="w30 villa-pointer" ng-click="moreInfo(villa)">
+                        <h4>{{villa.name}}</h4>
+                        <ul>
+                            <li>{{villa.f8[0].f1}}</li>
+                            <li>{{villa.r_counter}} спален</li>
+                            <li>{{villa.wc_counter}} гостей</li>
+                            <div class="clerfix"></div>
+                        </ul>
+                        <div class="color-line"></div>
+                        <span>Цена за сутки:</span>
+                        <p>${{villa.min_price}} — ${{villa.max_price}}</p>
+                        <button class="button-arrow" ng-click="moreInfo(villa)"><a>подробнее</a></button>
+                        <button class="button-add"><a>Добавить в заявку</a></button>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+body {
+  display: flex; }
+
+.layout__content {
+  width: 720px;
+  margin: auto; }
+
+.layout-list .layout-list__item {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row; }
+  .layout-list .layout-list__item > * {
+    display: block; }
+  .layout-list .layout-list__item .list-item__text {
+    font-weight: lighter; }
+  .layout-list .layout-list__item .list-item__status {
+    width: 30%; }
+
+/*# sourceMappingURL=styles.css.map */

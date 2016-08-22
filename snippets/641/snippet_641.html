@@ -1,0 +1,140 @@
+<div ng-controller="descriptionCtrl" ng-cloak>
+<div class="block-width">
+	<div class="block-info">
+        <ul class="breadcrumb">
+            <li>
+                 <a href="http://arenda-vill.com/"><img src="/files/villa/globus.png"/></a>
+            </li>
+
+            <!--<li>-->
+                <!--<a href="{{'http://' +  hostname}}" class="active">{{targetDirect.region}}</a>-->
+            <!--</li>-->
+            <!---->
+            <!--<li ng-show="currentVills.length > 0 &amp;&amp; currentVills[0].f8[0].f2 != undefined">-->
+                <!--<a href="{{'http://' + currentVills[0].f8[0].f2[0].f2}}" class="active">{{currentVills[0].f8[0].f2[0].f1}}</a>-->
+            <!--</li>-->
+            <!---->
+            <!--<li>-->
+                <!--<a href="" class="active">{{targetDirect.direction}}</a>-->
+            <!--</li>-->
+			<li ng-repeat="item in breadcrumbs">
+				<a ng-href="{{item.url}}">{{item.text}}</a>
+			</li>
+        </ul>
+		<h1 class="heading-title v-line">{{subDir.f1}}</h1>
+	</div>
+</div>
+<div id="slideshow-ken-burns" class="">
+        <!--<div class="item" ng-repeat="villa in currentVills" ng-class="{fx:$index == 0}">-->
+            <!--<slide style="background-image:url({{villa.img}})"></slide>-->
+            <!--<p>{{villa.name}}</p>-->
+        <!--</div>-->
+        <!--<div class="points">-->
+            <!--<div class="point" ng-class="{active:$index == 0}" ng-repeat="villa in currentVills" ng-click="slidePoint($index)"></div>-->
+        <!--</div>-->
+        <!--<div class="arrow arrowLeft" ng-click="prevSlide()"></div>-->
+        <!--<div class="arrow arrowRight" ng-click="nextSlide()"></div>-->
+	<div class="item" ng-repeat="image in subDir.images" ng-class="{fx:$index == 0}">
+		<slide style="background-image:url('{{image.f2}}')"></slide>
+	</div>
+
+	<div class="points">
+		<div class="point" ng-class="{active:$index == 0}" ng-repeat="image in subDir.images" ng-click="slidePoint($index)"></div>
+	</div>
+
+	<div class="arrow arrowLeft" ng-click="prevSlide()"></div>
+	<div class="arrow arrowRight" ng-click="nextSlide()"></div>
+</div>
+<div class="block-width cont">
+	<div class="block-info">
+		<div class="tab">
+
+        	<ul class="tabs">
+        		<li><a href="#">Описание</a></li>
+        		<li><a href="#">Климат</a></li>
+        		<li><a href="#">Инфраструктура</a></li>
+        	</ul> <!-- / tabs -->
+        
+        	<div class="tab_content">
+        
+        		<div class="tabs_item">
+        			<h4>Описание</h4>
+					<div ng-bind-html="subDir.f3"></div>
+        		</div> <!-- / tabs_item -->
+        
+        		<div class="tabs_item" id="map-tab">
+        			<h4>Климат</h4>
+					<div ng-bind-html="subDir.f7"></div>
+        			<h4>Средняя годовая температура</h4>
+        			<div class="chart-1" id="chart-1"></div><div class="clearfix"></div>
+        			<h4>Среднее выпадения осадков</h4>
+        			<div class="chart-2" id="chart-2"></div>
+        		</div> <!-- / tabs_item -->
+        
+        		<div class="tabs_item">
+        			<h4>Инфраструктура</h4>
+					<div ng-bind-html="subDir.f8"></div>
+
+					<h4>Ключевые места</h4>
+					<div ng-bind-html="subDir.f9"></div>
+
+        			<div class="keys">
+            			<p>
+            			    <span class="fly">Ближайший аэропорт</span>
+            			    <span class="right">{{subDir.f10}}</span>
+            			</p>
+            			<p>
+            			    <span class="port">Ближайший порт</span>
+            			    <span class="right">{{subDir.f11}}</span>
+            			 </p>
+            			 <p>
+            			     <span class="railway">Ближайший Жд-вокзал</span>
+            			    <span class="right">{{subDir.f12}}</span>
+            			 </p>
+            			 <p>   
+            			    <span class="tras">Ближайшая основная трасса</span>
+            			    <span class="right">{{subDir.f13}}</span>
+            			</p>
+						<!--<p>-->
+							<!--<span>Ключевые места</span>-->
+							<!--<span class="right">{{subDir.f9}}</span>-->
+						<!--</p>-->
+            		</div>
+        		</div> <!-- / tabs_item -->
+        		
+        	</div> <!-- / tab_content -->
+        </div> <!-- / tab -->
+	</div>
+</div>    
+	<div class="block-info direction">
+	    <h1 class="heading-title v-line" ng-hide="subDir.isDir">Выберите направление</h1>
+        <div id="map"></div>
+	</div>
+<div class="block-width cont">    
+	<div class="block-info">
+	    <h1 class="heading-title v-line">Доступные виллы</h1>
+	    		<div id="liked" class="blocks">
+            <div class="w70" ng-repeat="villa in currentVills">
+                <p class="w70">
+                    <img src="{{villa.img}}" ng-click="showVillaInfo(villa)" />
+                     <span ng-class="villa.inFavourites ? 'active-like' : ''" ng-click="villa.inFavourites = setFavouriteVilla(villa.field_value_id, $event)"></span>
+                </p>
+                <div class="w30 villa-pointer" ng-click="showVillaInfo(villa)">
+                    <h4>{{villa.name}}</h4>
+                    <ul>
+                        <li>{{villa.f8[0].f1}}</li>
+                        <li>{{villa.r_counter}} спален</li>
+                        <li>{{villa.wc_counter}} гостей</li>
+                        <div class="clerfix"></div>
+                    </ul>
+                    <div class="color-line"></div>
+                    <span>Цена за сутки:</span>
+                    <p>${{villa.min_price}} — ${{villa.max_price}}</p>
+                    <button class="button-arrow" ng-click="showVillaInfo(villa)"><a>подробнее</a></button>
+                    <button class="button-add"><a>Добавить в заявку</a></button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+	</div>
+</div>

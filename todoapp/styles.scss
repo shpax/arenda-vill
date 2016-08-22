@@ -1,0 +1,28 @@
+
+body {
+  display: flex;
+}
+
+.layout__content {
+  width: 720px;
+  margin: auto;
+}
+
+.layout-list {
+
+  .layout-list__item {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+
+    > * {
+      display: block;
+    }
+    .list-item__text {
+      font-weight: lighter;
+    }
+    .list-item__status {
+      width: 30%;
+    }
+  }
+}

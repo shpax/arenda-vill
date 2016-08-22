@@ -1,0 +1,390 @@
+<!--<h1 class="villa-name">{name}</h1>-->
+<!--<center>{date_of_addition}</center>-->
+<!--<p>{description}</p>-->
+
+<div ng-controller="villaCtrl" ng-cloak>
+    <div сlass="main">
+        <div id="head">
+            <div id="slideshow-ken-burns" class="fullscreen">
+
+                <div class="item" ng-repeat="slide in slides" ng-class="{fx:$index == 1}" ng-swipe-right="nextSlide()" ng-swipe-left="prevSlide()">
+                    <slide style="background-image:url('{{slide.src}}')" alt="{{slide.alt}}" ></slide>
+                </div>
+
+                <div class="points">
+                    <div class="point" ng-class="{active:$index == 0}" ng-repeat="slide in slides" ng-click="slidePoint($index)"></div>
+                </div>
+
+                <div class="bg-shadow bg-shadow1"></div>
+                <div class="bg-shadow bg-shadow2"></div>
+
+                <div class="arrow arrowLeft" ng-click="prevSlide()"></div>
+                <div class="arrow arrowRight" ng-click="nextSlide()"></div>
+
+                <div class="block-width desktop">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="http://arenda-vill.com/"><img src="/files/villa/globus-white.png"/></a>
+                        </li>
+
+                        <!--<li>-->
+                            <!--<a href="http://arenda-vill.com">Каталог Вилл</a>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                            <!--<a href="{{regionUrl}}">{{villaInfo.region}}</a>-->
+                        <!--</li>-->
+
+                        <!--<li ng-show="villaInfo.f8[0].f2[0].f1 != undefined">-->
+                            <!--<a href="{{'http://' + villaInfo.f8[0].f2[0].url}}">{{villaInfo.f8[0].f2[0].f1}}</a>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                            <!--<a href="{{directionUrl}}">{{villaInfo.f8[0].f1}}</a>-->
+                        <!--</li>-->
+
+                        <!--<li>-->
+                            <!--<a href="" class="active">{{villaInfo.name}}</a>-->
+                        <!--</li>-->
+
+                        <li ng-repeat="item in breadcrumbs">
+                            <a ng-href="{{item.url}}">{{item.text}}</a>
+                        </li>
+                    </ul>
+                    <h1>{{villaInfo.name}}</h1>
+
+                    <a class="arrow-down" href="#main-content">
+                        <img src="/files/villa/arrow_down.png">
+                    </a>
+                </div>
+                <div class="block-width mobile" ng-swipe-right="nextSlide()" ng-swipe-left="prevSlide()">
+                    <a id="favorite-add-mobile" ng-class="{'active': likedClass == true }" ng-click="addFav(villaInfo.field_value_id)"></a>
+                </div>
+                <h2 class="info-block mobile">{{villaInfo.name}}, {{villaInfo.f8[0].f1}}, {{regionName}}</h2>
+            </div>
+        </div>
+        <a class="anchor" name="main-content"></a>
+        <div class="info-container desktop">
+            <a class="arrow arrow-left" href="" ng-click="prevVilla()">
+                <h4 class="desktop" ng-bind="prevVillName"></h4><span class="desktop"></span>
+            </a>
+            <a class="arrow arrow-right" href="" ng-click="nextVilla()">
+                <span class="desktop"></span><h4 class="desktop" ng-bind="nexVillName"></h4>
+            </a>
+        </div>
+
+        <div class="block-width">
+
+            <div class="w50">
+                <!-- villa block -->
+                <div class="villa-block">
+                    <div class="table">
+                        <div class="table-row villa-row" style="height: 42px;">
+                            <div class="table-cell" style="width: inherit">
+                                <h1>{{villaInfo.name}}</h1>
+                            </div>
+                            <div class="table-cell desktop" style="float: right;">
+                                <a class="favorite-add" ng-class="{'active': likedClass == true }" id="favorite-add" ng-click="addFav(villaInfo.field_value_id)">Добавить в избранное</a>
+                            </div>
+
+
+                            <div class="table-cell mobile">
+                                <p>ID ({{villaInfo.field_value_id}})</p>
+                            </div>
+                        </div>
+                        <div class="table-row price-row">
+                            <div class="table-cell price-cell desktop-p">
+                                <p class="price">Цена за сутки:
+                                    <span class="desktop">${{villaInfo.min_price}} - ${{villaInfo.max_price}}</span>
+                                </p>
+                            </div>
+                            <div class="table-cell mobile mobile-p">
+                                <p class="price">Цена за сутки:
+                                    <span class="mobile-span">${{villaInfo.min_price}} - ${{villaInfo.max_price}}</span>
+                                </p>
+                            </div>
+                            <div class="table-cell desktop" style="margin: 2px 0;">
+                                <button class="button-arrow locate-to" ng-click="sendVillToHeader(villaInfo)">
+                                    <a href="">Бронирование</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="desktop">
+                        <div class="">
+                        </div>
+                        <div class="">
+                            <ul class="social-link">
+                                <li>
+                                    <p>Поделиться:</p>
+                                </li>
+                                <li>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=http://{{locHref}}" target="_blank" class="facebook fb-share-button"></a>
+                                </li>
+                                <li>
+                                    <a href="http://vk.com/share.php?url=http://{{locHref}}" target="_blank" class="vk"></a>
+                                </li>
+                                <li>
+                                    <a href="https://plus.google.com/share?url=http://{{locHref}}" class="google"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="main-button-block mobile" id="main-button-block">
+                        <div class="table">
+                            <div class="table-row">
+                                <div class="table-cell">
+                                    <button class="active" name="param-block">
+                                        <a>Основное</a>
+                                    </button>
+                                </div>
+                                <div class="table-cell">
+                                    <button name="features-block">
+                                        <a>Особенности</a>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-row">
+                                <div class="table-cell">
+                                    <button name="service-block">
+                                        <a>Удобства</a>
+                                    </button>
+                                </div>
+                                <div class="table-cell">
+                                    <button name="map-block">
+                                        <a>Карта</a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- param block -->
+                    <div class="param-block desktop active" id="param-block">
+                        <div class="id">
+                            <div class="param-item">
+                                <p>ID</p>
+                                <p>{{villaInfo.field_value_id}}</p>
+                            </div>
+                        </div>
+
+                        <div class="region">
+                            <div class="param-item">
+                                <p>Регион</p>
+                                <p>{{villaInfo.f8[0].f3[0].f1}}, {{villaInfo.f8[0].f1}}</p>
+                            </div>
+                        </div>
+                        <div class="location">
+                            <div class="param-item">
+                                <p>Место размещения</p>
+                                <p>{{villaInfo.recreation_style}}</p>
+                            </div>
+                        </div>
+                        <div class="bedroom">
+                            <div class="param-item">
+                                <p>Количество спален</p>
+                                <p>{{villaInfo.r_counter}}</p>
+                            </div>
+                        </div>
+                        <div class="bathroom">
+                            <div class="param-item">
+                                <p>Количество ванных комнат</p>
+                                <p>{{villaInfo.wc_counter}}</p>
+                            </div>
+                        </div>
+                        <div class="people">
+                            <div class="param-item">
+                                <p>Количество гостей</p>
+                                <p>{{villaInfo.person_counter}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- features block -->
+                <div class="features-block desktop" id="features-block">
+                    <h4>Особенности</h4>
+                    <ul class="good-list">
+                        <li class="good-list__item" ng-repeat="benefit in villaInfo.benefits">
+                            <img ng-if="benefit.f2" src="{{benefit.f2}}">
+                            <span>{{benefit.f1}}</span>
+                        </li>
+                    </ul>
+
+                    <!--<p>Перечень основных удобств, которые присутствуют в данной вилле</p>-->
+
+                    <div class="table">
+                        <div class="table-row" ng-show="benefits.length > 0">
+                            <div class="table-cell" ng-repeat="benefit in benefits | limitTo: 2 : 0">
+                                <div class="icon {{benefit.className}}">{{benefit.name}}</div>
+                            </div>
+                            <div class="table-cell">
+                                <div class="icon {{benefit.className}}">{{benefit.name}}</div>
+                            </div>
+                        </div>
+
+                        <div class="table-row" ng-show="benefits.length > 2">
+                            <div class="table-cell" ng-repeat="benefit in benefits | limitTo: 2 : 2">
+                                <div class="icon {{benefit.className}}">{{benefit.name}}</div>
+                            </div>
+                            <div class="table-cell">
+                                <div class="icon {{benefit.className}}">{{benefit.name}}</div>
+                            </div>
+                        </div>
+
+                        <div class="table-row" ng-show="benefits.length > 4">
+                            <div class="table-cell" ng-repeat="benefit in benefits | limitTo: 2 : 4">
+                                <div class="icon {{benefit.className}}">{{benefit.name}}</div>
+                            </div>
+                            <div class="table-cell">
+                                <div class="icon {{benefit.className}}">{{benefit.name}}</div>
+                            </div>
+                        </div>
+
+                        <div class="table-row desktop" ng-show="benefits.length > 6">
+                            <div class="table-cell" ng-repeat="benefit in benefits | limitTo: 2 : 6">
+                                <div class="icon {{benefit.className}}">{{benefit.name}}</div>
+                            </div>
+                            <div class="table-cell">
+                                <div class="icon {{benefit.className}}">{{benefit.name}}</div>
+                            </div>
+                        </div>
+
+                        <div class="table-row desktop" ng-show="benefits.length > 8">
+                            <div class="table-cell" ng-repeat="benefit in benefits | limitTo: 2 : 8">
+                                <div class="icon {{benefit.className}}">{{benefit.name}}</div>
+                            </div>
+                            <div class="table-cell">
+                                <div class="icon {{benefit.className}}">{{benefit.name}}</div>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="table-row desktop">
+                            <div class="table-cell">
+                                <div class="icon secure">Охраняемая территория</div>
+                            </div>
+                            <div class="table-cell">
+                                <div class="icon alfresco">Альфреско</div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <!-- bedroom block -->
+                <div class="bedroom-block desktop">
+                    <h4>Спальни</h4>
+                    <div ng-bind-html="villaInfo.f16"></div>
+                </div>
+            </div>
+            <div class="w50">
+                <!-- description block -->
+                <div class="description-block desktop">
+                    <h4>Описание</h4>
+                    <div ng-bind-html="villaInfo.description"></div>
+                    <div class="readMoreBlock">
+                        <div class="readMoreInfo" ng-bind-html="villaInfo.additional_info">
+                        </div>
+                        <p class="readMore">Читать больше</p>
+                    </div>
+                </div>
+                <!-- service block -->
+                <div class="service-block desktop" id="service-block">
+                    <h4>Удобства и услуги</h4>
+                    <div class="w50">
+                        <p>Включенные сервисы</p>
+                        <div ng-bind-html="villaInfo.f19" class="markup--paragraphs-plain"></div>
+                    </div>
+                    <div class="w50 desktop">
+                        <p>Дополнительные сервисы:</p>
+                        <div ng-bind-html="villaInfo.f15" class="markup--paragraphs-plain"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+
+            </div>
+            <div class="clearfix"></div>
+
+
+        </div><!--<div class="block-width">-->
+        <div class="map-block desktop" id="map-block">
+            <div class="form-block desktop">
+                <div class="block-width">
+                    <div class="table">
+                        <div class="table-cell">
+                            <form id="form-villa">
+                                <h1>Заявка для бронирования</h1>
+                                <p class="info">Отправьте заявку, наш менеджер свяжется с Вами в течении 24 часов</p>
+                                <input type="text" name="data[f1]" id="nameV" placeholder="Имя" ng-model="reqName" ng-blur="validateName()">
+                                <input type="text" name="data[f2]" id="phoneV" placeholder="Телефон" ng-model="reqPhone" ng-blur="validatePhone()">
+                                <input type="text" name="data[f3]" id="emailV" placeholder="E-mail" ng-model="reqEmail" ng-blur="validateEmail()">
+                                <input type="text" name="data[f4]" id="commentsV" placeholder="Комментарий" ng-model="reqComments" ng-blur="validateComments()">
+                                <p>
+                                    <button class="button-arrow" ng-click="sendReqDataVilla(villaInfo, 'form-villa')">
+                                        <a>Отправить заявку</a>
+                                    </button>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="map-id"></div>
+        </div>
+        <div class="availability-block mobile">
+            <div class="info-container">
+                <a class="arrow arrow-left" href="" ng-click="prevVilla()">
+                    <h4 class="desktop" ng-bind="prevVillName"></h4><span class="desktop"></span>
+                </a>
+                <a class="arrow arrow-right" href="" ng-click="nextVilla()">
+                    <span class="desktop"></span><h4 class="desktop" ng-bind="nexVillName"></h4>
+                </a>
+            </div>
+            <button>
+                <a>Проверить доступность</a>
+            </button>
+        </div>
+        <div class="mobile form-block">
+            <h2>Отправте виллы агенту</h2>
+            <i class="cancelItem"></i>
+            <form id="form-villa-mobile">
+                <input type="text" name="data[f1]" placeholder="Имя" id="nameVmobile" class="modal-input req-name" ng-model="reqNameMobile" ng-blur="validateName()">
+                <input type="text" name="data[f2]" placeholder="Телефон" id="phoneVmobile" class="modal-input req-phone" ng-model="reqPhoneMobile" ng-blur="validatePhone()">
+                <input type="text" name="data[f3]" placeholder="E-mail" id="emailVmobile" class="req-email" ng-model="reqEmailMobile" ng-blur="validateEmail()">
+                <input type="text" name="data[f4]" placeholder="Комментарий" id="commentsVmobile" class="modal-input req-comments" ng-model="reqCommentsMobile" ng-blur="validateComments()">
+
+                <button type="submit" ng-click="sendReqDataVilla(villaInfo, 'form-villa-mobile')">
+                    <a>Проверить доступность</a>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="block-width cont" ng-hide="currentVills.length == 1">
+        <div class="block-info" ng-show="$s.currentVills.length">
+            <h1 class="heading-title v-line">Смотрите также</h1>
+            <div class="arrow-best-right" ng-click="incrementIndex()" ng-hide="currentVills.length < 4"></div>
+            <div class="arrow-best-left" ng-click="decrementIndex()" ng-hide="currentVills.length < 4"></div>
+            <div id="liked" class="blocks">
+                <div class="w70" ng-repeat="villa in currentVills | limitTo: 3 : index ">
+                    <p class="w70">
+                        <img src="{{villa.img}}" ng-click="moreInfo(villa)" />
+                        <span ng-class="{'active-like': isFavTarget(villa.field_value_id) == true }" id="favorite-add" ng-click="addFavTarget(villa.field_value_id, $event)"></span>
+                    </p>
+                    <div class="w30 villa-pointer" ng-click="moreInfo(villa)">
+                        <h4>{{villa.name}}</h4>
+                        <ul>
+                            <li>{{villa.f8[0].f1}}</li>
+                            <li ng-class="{'casper': villa.r_counter == undefined}">{{villa.r_counter}} спален</li>
+                            <li ng-class="{'casper': villa.wc_counter == undefined}">{{villa.wc_counter}} гостей</li>
+                            <div class="clerfix"></div>
+                        </ul>
+                        <div class="color-line"></div>
+                        <span>Цена за сутки:</span>
+                        <p>${{villa.min_price}} — ${{villa.max_price}}</p>
+                        <button class="button-arrow" ng-click="moreInfo(villa)"><a>подробнее</a></button>
+                        <button class="button-add"><a>Добавить в заявку</a></button>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>

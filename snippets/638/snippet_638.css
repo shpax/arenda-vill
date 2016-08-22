@@ -1,0 +1,1113 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important; }
+
+/*main css*/
+.show1 {
+  display: block; }
+
+.w70 img {
+  cursor: pointer;
+  min-height: 246px; }
+
+.block-width {
+  width: 100%; }
+
+b {
+  font-weight: bold !important;
+}
+
+#slideshow-ken-burns .points {
+  bottom: 20px; }
+
+#slideshow-ken-burns slide {
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  -ms-transform: none !important;
+  -o-transform: none !important;
+  transform: none !important; }
+
+#slideshow-ken-burns .item {
+  transition-duration: 0.5s, 10s !important; }
+
+[class*=-block] h4 {
+  position: relative;
+  padding-left: 20px;
+  color: #333;
+  letter-spacing: 1px;
+  font-weight: 600;
+  font-size: 143%;
+  font-family: 'Open Sans'; }
+
+[class*=-block] h4:before {
+  content: url("http://arenda-vill.ovo.ua/cached/images/Climat.png");
+  display: block;
+  height: 15px;
+  line-height: 20px;
+  left: 0;
+  top: 5px;
+  position: absolute;
+  width: 15px; }
+
+p {
+  color: #333333;
+  font-size: 100%; }
+
+.block-width {
+  height: 100%; }
+
+.villa-block .button-arrow {
+  height: 50px;
+  width: 100%; }
+
+.button-arrow {
+  width: inherit; }
+
+.table-cell {
+  width: 50%; }
+
+.villa-block .table-cell {
+  display: block;
+  float: left; }
+
+.features-block .table-cell:nth-of-type(3) {
+  display: none;
+  width: 0; }
+
+/*main-slide*/
+#slideshow-ken-burns .arrowRight {
+  right: -39px; }
+
+#slideshow-ken-burns .arrowLeft {
+  left: -39px; }
+
+#head .bg-shadow {
+  position: absolute;
+  display: inline-block;
+  content: " ";
+  height: 100%;
+  width: 100%; }
+
+#head .bg-shadow1 {
+  background: -webkit-linear-gradient(-90deg, #000 0%, rgba(21, 21, 21, 0) 20%);
+  background: -moz-linear-gradient(-90deg, #000 0%, rgba(21, 21, 21, 0) 20%);
+  background: -o-linear-gradient(-90deg, #000 0%, rgba(21, 21, 21, 0) 20%);
+  background: -ms-linear-gradient(-90deg, #000 0%, rgba(21, 21, 21, 0) 20%);
+  background: linear-gradient(180deg, #000 0%, rgba(21, 21, 21, 0) 20%); }
+
+/*#head .bg-shadow2 {*/
+/*    background: -webkit-linear-gradient(90deg, #000000 0%, rgba(21, 21, 21, 0) 20%);*/
+/*    background: -moz-linear-gradient(90deg, #000000 0%, rgba(21, 21, 21, 0) 20%);*/
+/*    background: -o-linear-gradient(90deg, #000000 0%, rgba(21, 21, 21, 0) 20%);*/
+/*    background: -ms-linear-gradient(90deg, #000000 0%, rgba(21, 21, 21, 0) 20%);*/
+/*    background: linear-gradient(0deg, #000000 0%, rgba(21, 21, 21, 0) 20%);*/
+/*}*/
+.breadcrumb {
+  padding: 15px 0; }
+
+.breadcrumb > li {
+  display: inline-block; }
+
+.breadcrumb > li::after {
+  background: transparent url("http://arenda-vill.ovo.ua/cached/images/arrow_nav.png") no-repeat scroll 0 0 !important;
+  content: " ";
+  display: inline-block;
+  height: 5px;
+  margin: 0 10px;
+  width: 10px; }
+
+.breadcrumb > li:last-child:after {
+  display: none; }
+
+.breadcrumb a {
+  border-bottom: 2px solid #999999;
+  color: #ffffff;
+  font-size: 86%;
+  cursor: pointer;
+  font-weight: 200; }
+
+.breadcrumb a.active {
+  border-bottom: none !important;
+  /*color: #999999 !important;*/ }
+
+.arrow-down {
+  bottom: 5%;
+  left: 50%;
+  margin-left: -21px;
+  position: absolute;
+  z-index: 1000; }
+
+.arrow-down > img {
+  max-width: 42px; }
+
+#slideshow-ken-burns .info-block {
+  color: #ffffff;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 40px;
+  z-index: 100; }
+
+#slideshow-ken-burns .points {
+  display: none; }
+
+/*info-container*/
+.info-container {
+  position: relative;
+  z-index: 5; }
+
+.info-container > .arrow {
+  position: absolute;
+  /*top: 50%;*/
+  display: inline-block;
+  border: 2px solid #ba8746;
+  border-radius: 40px;
+  padding: 21px 24px;
+  width: 69px;
+  height: 64px;
+  bottom: -600px;
+  -moz-transition: all 0.3s ease 0s;
+  -ms-transition: all 0.3s ease 0s;
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s; }
+
+.info-container .arrow:hover {
+  background: #ba8746;
+  color: #fff;
+  width: 21%;
+  /*min-width:237px;*/
+  -moz-transition: all 0.3s ease 0s;
+  -ms-transition: all 0.3s ease 0s;
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s; }
+
+.info-container .arrow-right:hover span {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -106px -37px;
+  color: #fff; }
+
+.info-container .arrow-left:hover span {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -76px -37px;
+  color: #fff; }
+
+.info-container > .arrow h4 {
+  color: #ffffff;
+  display: inline;
+  width: 0;
+  opacity: 0;
+  font-size: 0;
+  left: 0%;
+  top: 0;
+  padding: 0;
+  -moz-transition: all 0.3s ease 0s;
+  -ms-transition: all 0.3s ease 0s;
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s; }
+
+.info-container .arrow:hover h4 {
+  width: 100%;
+  opacity: 1;
+  font-size: 110%;
+  top: 10%;
+  left: 0;
+  padding: 0 10px; }
+
+.info-container > .arrow h4:before {
+  display: none; }
+
+.info-container > .arrow > span {
+  content: " ";
+  display: inline-block;
+  height: 18px;
+  width: 30px;
+  vertical-align: middle; }
+
+.info-container > .arrow-left {
+  left: 0;
+  border-left: none;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  padding-left: 10px;
+  text-align: right; }
+
+.info-container > .arrow-left span {
+  background: url("http://arenda-vill.ovo.ua/cached/images/villa/product_card-sprite2.png") no-repeat scroll -76px -55px; }
+
+.info-container > .arrow-right span {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -109px -55px; }
+
+.info-container > .arrow-right {
+  right: 0px;
+  padding-right: 0px;
+  border-right: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0; }
+
+.info-container > .arrow span {
+  cursor: pointer; }
+
+/*info-container: villa-block*/
+.villa-block {
+  padding: 30px 20px;
+  box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.2);
+  width: 99%;
+}
+
+.villa-block h1 {
+  margin: 0;
+  line-height: 1;
+  text-transform: inherit;
+  font-size: 200%;
+  text-align: left;
+  line-height: 43px;
+  white-space: nowrap; }
+
+.villa-block h2,
+.map-block h2 {
+  margin: 0;
+  font-size: 486%; }
+
+.villa-block .favorite-add {
+  color: #ba8746;
+  float: right;
+  line-height: 43px;
+  margin-left: 15px;
+  text-decoration: underline dashed #ba8746; }
+
+.villa-block .favorite-add:hover,
+.villa-block .favorite-add:focus {
+  color: #ba8746; }
+
+.villa-block .favorite-add:after,
+#favorite-add-mobile {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card_sprite2.png") no-repeat scroll -45px 0;
+  content: " ";
+  display: inline-block;
+  float: right;
+  height: 45px;
+  /*margin-left: 15px;*/
+  width: 45px;
+  /*margin-right: -15px;*/ }
+
+#favorite-add-mobile {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  margin-right: 0; }
+
+.villa-block .favorite-add.active:after,
+#favorite-add-mobile.active {
+  background-position: -164px 0; }
+
+.villa-block .social-link {
+  text-align: right; }
+
+.villa-block .price,
+.villa-block .social-link p {
+  color: #999999;
+  font-size: 100%; }
+
+.villa-block .price {
+  margin: 5px 0; }
+
+.villa-block .price > span {
+  color: #333333;
+  display: block;
+  font-size: 171%;
+  padding-top: 7px;
+  font-weight: 600;
+  letter-spacing: 1px; }
+
+.villa-block .social-link li {
+  display: inline-block;
+  vertical-align: middle;
+  opacity: 0.4; }
+
+.villa-block .social-link li:first-child {
+  opacity: 1; }
+
+.villa-block .social-link a {
+  content: "";
+  display: inline-block;
+  height: 18px;
+  margin-left: 15px; }
+
+.villa-block .social-link a.facebook {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll 0px -56px;
+  width: 9px; }
+
+.fb_iframe_widget span {
+  opacity: 0; }
+
+img._3vtw {
+  display: none; }
+
+.villa-block .social-link a.vk {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -9px -56px;
+  width: 12px; }
+
+.villa-block .social-link a.twitter {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -21px -56px;
+  width: 18px; }
+
+.villa-block .social-link a.linkedin {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -39px -56px;
+  width: 18px; }
+
+.villa-block .social-link a.google {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -57px -56px;
+  width: 19px; }
+
+.villa-block .main-button-block,
+.villa-block .main-button-block .table {
+  width: 100%; }
+
+.villa-block .main-button-block .table-cell {
+  padding: 10px; }
+
+.villa-block .main-button-block .table-cell:first-child {
+  padding-left: 0; }
+
+.villa-block .main-button-block .table-cell:last-child {
+  padding-right: 0; }
+
+.villa-block .main-button-block button {
+  width: 100%;
+  max-width: 100%; }
+
+.villa-block .main-button-block button.active {
+  background-color: #ba8746; }
+
+.villa-block .main-button-block button.active a {
+  color: #ffffff; }
+
+.villa-block .param-block > div {
+  position: relative; }
+
+.villa-block .param-block .param-item:before {
+  margin-right: 12px;
+  width: 20px;
+  content: "";
+  display: inline-block;
+  vertical-align: middle; }
+
+.villa-block .param-block .id .param-item::before {
+  height: 16px;
+  width: 17px;
+  margin-right: 10px;
+  background: url("http://arenda-vill.ovo.ua/cached/images/id.png") no-repeat;
+  background-size: cover;
+  overflow: hidden;
+  border-left: 4px solid white;
+  border-right: 4px solid white; }
+
+.villa-block .param-block .region .param-item::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -172px -36px;
+  border-left: 4px solid #ffffff;
+  border-right: 4px solid #ffffff;
+  height: 20px;
+  width: 14px; }
+
+.villa-block .param-block .location .param-item:before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -152px -38px;
+  height: 18px; }
+
+.villa-block .param-block .bedroom .param-item::before {
+  background: transparent url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -186px -38px;
+  height: 18px; }
+
+.villa-block .param-block .bathroom .param-item::before {
+  background: transparent url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -152px -56px;
+  height: 20px; }
+
+.villa-block .param-block .people .param-item::before {
+  background: transparent url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -173px -56px;
+  height: 13px; }
+
+#content .villa-block .param-block p {
+  font-size: 111.57%;
+  background: #ffffff;
+  color: #333333;
+  font-weight: 400;
+  display: inline-block;
+  position: relative;
+  z-index: 1; }
+
+#content .villa-block .param-block p:last-of-type {
+  margin-left: -177px; }
+
+.villa-block .param-item::after {
+  border-top: 1px dotted #999999;
+  bottom: 21px;
+  content: "";
+  display: inline-block;
+  height: 2px;
+  left: 38px;
+  position: absolute;
+  width: calc(100% - 40px);
+  z-index: 0; }
+
+.villa-block .param-item.region::before {
+  width: 20px; }
+
+#content .villa-block .param-block p:first-child {
+  color: #999;
+  padding-right: 5px; }
+
+#content .villa-block .param-block p:last-child {
+  padding-left: 5px;
+  float: right; }
+
+/*info-container: features-block*/
+.features-block .table,
+.features-block .table-row {
+  width: 100%; }
+
+.villa-block .table-row {
+  display: block; }
+
+.features-block .table-cell {
+  border-bottom: 1px solid #ebebeb; }
+
+.features-block .table-row:lst-child .table-cell {
+  border-bottom: none; }
+
+.features-block .table-cell {
+  width: 50%;
+  height: 70px;
+  color: #333;
+  font-size: 111.57%;
+  padding-left: 30px; }
+
+.features-block .icon::before {
+  content: " ";
+  display: inline-block;
+  width: 36px;
+  vertical-align: middle;
+  margin-right: 20px; }
+
+.features-block .icon.beach::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/beach.png") no-repeat;
+  height: 30px; }
+
+.features-block .icon.swimm::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/swimming-pool.png") no-repeat;
+  height: 30px; }
+
+.features-block .icon.jacuzzi::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/jacuzzi.png") no-repeat;
+  height: 30px; }
+
+.features-block .icon.sauna-bucket::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/sauna-bucket.png") no-repeat;
+  height: 30px; }
+
+.features-block .icon.cinema-hall::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/cinema-hall.png") no-repeat;
+  height: 30px; }
+
+.features-block .icon.pier::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/pier.png") no-repeat;
+  height: 30px; }
+
+.features-block .icon.sport::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -209px -36px;
+  height: 20px; }
+
+.features-block .icon.parking::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -173px 0;
+  height: 36px; }
+
+.features-block .icon.tv::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -70px 0;
+  height: 27px; }
+
+.features-block .icon.dvd::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -209px -56px;
+  height: 18px; }
+
+.features-block .icon.apple::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -245px 0;
+  border-left: 7px solid #ffffff;
+  border-right: 7px solid #ffffff;
+  height: 36px;
+  width: 22px; }
+
+.features-block .icon.secure::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -106px -1px;
+  border-left: 3px solid #ffffff;
+  border-right: 3px solid #ffffff;
+  height: 35px;
+  width: 31px; }
+
+.features-block .icon.conditioner::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -34px -27px;
+  height: 24px; }
+
+.features-block .icon.fireplace::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -209px 0;
+  height: 36px; }
+
+.features-block .icon.sauna::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -137px 0;
+  height: 26px; }
+
+.features-block .icon.wi-fi::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -34px 0;
+  height: 27px; }
+
+.features-block .icon.barbecue::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll -267px 0;
+  height: 35px; }
+
+.features-block .icon.alfresco::before {
+  background: url("http://arenda-vill.ovo.ua/cached/images/product_card-sprite2.png") no-repeat scroll 2px 0;
+  height: 31px; }
+
+.description-block,
+.bedroom-block,
+.features-block,
+.service-block {
+  padding: 40px 0px;
+  margin: 0px 20px; }
+
+.description-block,
+.bedroom-block {
+  border-bottom: 1px solid #ebebeb; }
+
+.description-block .readMore {
+  color: #ba8746;
+  width: 105px;
+  border-bottom: 1px dashed #ba8746; }
+
+.bedroom-block li,
+.service-block li {
+  padding-bottom: 14px;
+  color: #333333;
+  font-size: 100%;
+  font-weight: 300;
+  list-style: disc inside; }
+
+.bedroom-block li span,
+.service-block p {
+  font-weight: 700; }
+
+.bedroom-block li span {
+  color: #333333; }
+
+.map-block {
+  height: 700px;
+  margin-top: 40px;
+  position: relative;
+  border-top: 2px solid #ba8746; }
+
+.map-block .form-block {
+  height: 100%;
+  position: absolute;
+  width: 100%; }
+
+.map-block .block-width,
+.map-block .table {
+  height: 100%; }
+
+.map-block form {
+  background: #ffffff none repeat scroll 0 0;
+  max-width: 555px;
+  padding: 40px;
+  text-align: center;
+  width: 100%; }
+
+.map-block form h2 {
+  margin-top: 0; }
+
+.map-block form .info {
+  font-size: 111.57%;
+  margin: 0 auto;
+  max-width: 365px;
+  width: 100%; }
+
+.map-block form input {
+  border: none;
+  border-bottom: 1px solid #d0d0d0;
+  height: 58px;
+  margin-bottom: 22px;
+  text-align: center;
+  width: 100%;
+  font-family: "Open Sans",sans-serif;
+  font-size: 128.57%;
+  font-weight: 700; }
+
+.map-block ::-webkit-input-placeholder {
+  color: #999;
+  font-weight: 300; }
+
+.map-block ::-moz-placeholder {
+  color: #999;
+  font-weight: 300; }
+
+/* Firefox 19+ */
+.map-block :-moz-placeholder {
+  color: #999;
+  font-weight: 300; }
+
+/* Firefox 18- */
+.map-block :-ms-input-placeholder {
+  color: #999;
+  font-weight: 300; }
+
+.map-block :placeholder {
+  color: #999;
+  font-weight: 300; }
+
+.map-block form input:focus {
+  border-bottom-color: #575757; }
+
+.availability-block {
+  padding: 20px 5px 25px;
+  text-align: center;
+  width: 100%;
+  position: relative; }
+
+#liked.blocks > .w70 {
+  margin-bottom: 20px;
+  margin-top: 0; }
+
+h1.heading-title {
+  margin: 0; }
+
+@media (max-width: 1220px) {
+  #content .block-width {
+    max-width: 1000px;
+    font-size: 90%; }
+
+  .table-cell .button-arrow {
+    min-width: 216px; } }
+@media (max-width: 1102px) {
+  .villa-block .table-row h1 {
+    font-size: 200%; }
+
+  .villa-block .button-arrow {
+    height: 42px; }
+
+  #content .block-width {
+    max-width: 950px; } }
+@media (max-width: 1023px) {
+  #form-villa {
+    width: 47%; }
+
+  .table-cell form {
+    margin-left: -10px !important; } }
+@media (max-width: 1023px) {
+  /*main css*/
+  h1 {
+    font-size: 150%;
+    letter-spacing: 1px; }
+
+  p {
+    font-size: 90%;
+    margin: 8px 0; }
+
+  .villa-block button a, .availability-block button a {
+    color: #ba8746; }
+
+  .villa-block button a {
+    font-size: 120%; }
+
+  .availability-block button {
+    height: 25px; }
+
+  #content .mobile {
+    display: inline-block; }
+
+  .table {
+    width: 100%; }
+
+  .main {
+    position: relative; }
+
+  #slideshow-ken-burns .info-block {
+    font-size: 96%; }
+
+  .form-block {
+    width: 100%; }
+
+  #content .form-block input,
+  #content .form-block textarea {
+    margin-top: 10px;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid #f5f5f5;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+    font-size: 107%;
+    font-weight: 200;
+    font-family: 'Open Sans', sans-serif; }
+
+  #content .form-block button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    border-radius: 6px;
+    background-color: #ba8746;
+    max-width: 288px;
+    width: 100%;
+    height: 28px; }
+
+  #content .form-block button a {
+    color: #fff; }
+
+  #content .form-block button:hover a,
+  #content .form-block button:focus a {
+    color: #fff !important; }
+
+  #footer .form-contacts-block .w50:first-child,
+  .block-width.cont {
+    display: none; }
+
+  #content .mobile.form-block.form-act {
+    display: block;
+    padding: 0 17px; }
+
+  .cancelItem {
+    top: -25px;
+    padding-top: -3px;
+    position: relative;
+    float: right;
+    display: block;
+    width: 8px;
+    height: 7px;
+    content: url("http://arenda-vill.ovo.ua/cached/images/arrow.png"); }
+
+  #content .mobile.form-block {
+    position: fixed;
+    top: 63px;
+    background-color: #fff;
+    z-index: 1000;
+    height: 100%;
+    display: none;
+    outline: none; }
+
+  .mobile.form-block h2 {
+    font-size: 130%;
+    text-align: center; }
+
+  #content .table-cell {
+    font-size: 86%; }
+
+  /*#content .table-cell {*/
+  /*    display: table-cell;*/
+  /*}*/
+  /*#content .desktop {*/
+  /*    display: none;*/
+  /*}*/
+  /*#content .desktop.active {*/
+  /*    display: block;*/
+  /*}*/
+  /**/
+  /*#slideshow-ken-burns {*/
+  /*    height: 273px;*/
+  /*}*/
+  /*#slideshow-ken-burns .arrow {*/
+  /*    display: none;*/
+  /*}*/
+  /*#slideshow-ken-burns .points {*/
+  /*    display: block;*/
+  /*}*/
+  /*.info-container >  .block-width {*/
+  /*    padding: 0;*/
+  /*}*/
+  /*.info-container > .arrow*/
+  /*{*/
+  /*    border: none;*/
+  /*    bottom: 5px;*/
+  /*padding: 0;*/
+  /*top: auto;*/
+  /*}*/
+  /*.info-container > .arrow-left {*/
+  /*	border-bottom: 34px solid rgba(0, 0, 0, 0);*/
+  /*    border-left: 34px solid rgba(186, 135, 70, 0.6);*/
+  /*    border-top: 34px solid rgba(0, 0, 0, 0);*/
+  /*    left: 0;*/
+  /*}*/
+  /*.info-container > .arrow-left:before {*/
+  /*    background: rgba(0, 0, 0, 0) url("/files/arrow-slider-left.png") no-repeat scroll center center / contain ;*/
+  /*    content: "";*/
+  /*    height: 18px;*/
+  /*    width: 21px;*/
+  /*    left: -36px;*/
+  /*    margin-top: -10px;*/
+  /*    position: absolute;*/
+  /*    top: 50%;*/
+  /*}*/
+  /*.info-container > .arrow-right {*/
+  /*    border-bottom: 34px solid rgba(0, 0, 0, 0);*/
+  /*    border-right: 34px solid rgba(186, 135, 70, 0.6);*/
+  /*    border-top: 34px solid rgba(0, 0, 0, 0);*/
+  /*    background: transparent;*/
+  /*}*/
+  /*.info-container > .arrow-right:before {*/
+  /*    background: url("/files/arrow-slider-right.png") no-repeat scroll center center / contain ;*/
+  /*    content: "";*/
+  /*    height: 18px;*/
+  /*    position: absolute;*/
+  /*    right: -36px;*/
+  /*    margin-top: -10px;*/
+  /*    top: 50%;*/
+  /*    width: 21px;*/
+  /*}*/
+  .info-container > .block-width {
+    padding: 0; }
+
+  .info-container > .arrow {
+    border: none;
+    bottom: 2px !important;
+    padding: 0;
+    top: auto; }
+
+  .features-block {
+    padding: 0 20px; }
+
+  .description-block h4,
+  .bedroom-block h4,
+  .service-block h4,
+  .features-block h4 {
+    color: #333;
+    font-family: 'Open Sans';
+    font-size: 112%;
+    font-weight: 600; }
+
+  [class*=-block] h4:before {
+    top: 2px; }
+
+  .features-block p {
+    font-size: 86%;
+    line-height: 14px;
+    color: #333; }
+
+  .villa-row p {
+    font-size: 100%;
+    color: #333; }
+
+  #main-button-block {
+    margin-top: 10px; }
+
+  .features-block .icon::before {
+    margin-right: 5px; }
+
+  .info-container .arrow:hover {
+    width: auto;
+    border-radius: 0;
+    background: transparent; }
+
+  .villa-block .main-button-block .table-cell {
+    padding: 0 10px 10px 0; }
+
+  .villa-block .villa-row h1 {
+    font-size: 130%;
+    letter-spacing: 1px; }
+
+  .info-container > .arrow-left {
+    border-bottom: 34px solid transparent;
+    border-left: 34px solid rgba(186, 135, 70, 0.9);
+    border-top: 34px solid transparent;
+    left: 0; }
+
+  .info-container > .arrow-left:before {
+    background: transparent url("http://arenda-vill.ovo.ua/cached/images/arrow-slider-left.png") no-repeat scroll center center/contain;
+    content: "";
+    height: 18px;
+    width: 21px;
+    left: -36px;
+    margin-top: -10px;
+    position: absolute;
+    top: 50%; }
+
+  .info-container > .arrow-right {
+    border-bottom: 34px solid transparent;
+    border-right: 34px solid rgba(186, 135, 70, 0.9);
+    border-top: 34px solid transparent;
+    background: transparent; }
+
+  .info-container > .arrow-right:before {
+    background: url("http://arenda-vill.ovo.ua/cached/images/arrow-slider-right.png") no-repeat scroll center center/contain;
+    content: "";
+    height: 18px;
+    position: absolute;
+    right: -36px;
+    margin-top: -10px;
+    top: 50%;
+    width: 21px; }
+
+  .villa-block .main-button-block button {
+    padding: 0; }
+
+  .villa-block .param-item::after {
+    bottom: 11px; }
+
+  .villa-block {
+    margin-bottom: 0;
+    padding: 5px 17px;
+    width: 100%;
+    box-shadow: none; }
+
+  .villa-block .villa-row h1 {
+    text-align: left; }
+
+  .villa-row p {
+    text-align: right;
+    font-size: 120%; }
+
+  .villa-block .price-row span {
+    color: #333333;
+    font-size: 140%;
+    font-weight: 700;
+    float: right; }
+
+  #content .villa-block .param-block p {
+    font-size: 100%; }
+
+  .description-block,
+  .bedroom-block,
+  .service-block,
+  .features-block {
+    padding: 0 17px;
+    margin: 0; }
+
+  .description-block h4,
+  .bedroom-block h4,
+  .service-block h4,
+  .features-block h4 {
+    margin-top: 0;
+    margin-bottom: 10px; }
+
+  .features-block .table-cell {
+    /*text-align: center;*/
+    font-size: 100%;
+    padding-left: 0; }
+
+  /*.features-block .icon::before {*/
+  /*    display: block;*/
+  /*    margin: 0 auto;*/
+  /*}*/
+  .map-block {
+    margin-top: 0; }
+
+  .map-block {
+    height: 300px;
+    border-top: none;
+    width: 100%; }
+
+  #map-id {
+    z-index: 10 !important; } }
+@media (max-width: 1023px) {
+  .info-container {
+    position: relative;
+    top: 80px; } }
+.mobile-p {
+  width: 100%; }
+
+#map-id {
+  width: 100%;
+  height: 100%;
+  z-index: -99999; }
+
+.table {
+  width: 100%; }
+
+.table-cell form {
+  margin-left: -70px; }
+
+.leaflet-control-container {
+  display: none; }
+
+.leaflet-popup {
+  max-width: none; }
+
+.leaflet-popup-pane {
+  position: absolute;
+  left: 50px; }
+
+.leaflet-shadow-pane, .leaflet-marker-pane {
+  z-index: 10 !important; }
+
+.leaflet-popup-content {
+  font-family: 'Philosopher', sans-serif;
+  font-size: 27.57px;
+  color: #333333;
+  font-weight: 700; }
+
+.leaflet-map-pane {
+  transform: translate3d(0px, 0px, 0px); }
+
+.leaflet-popup-close-button, .leaflet-popup-tip {
+  display: none; }
+
+.leaflet-popup-content-wrapper {
+  padding: 0px !important;
+  border-radius: 0 !important;
+  position: relative;
+  z-index: -9999; }
+
+.markup--paragraphs-plain p {
+  font-weight: normal !important; }
+
+.breadcrumb a {
+  border-bottom: none;
+  text-decoration: underline; }
+
+.villa-pointer {
+  cursor: pointer; }
+
+.locate-to {
+  cursor: pointer; }
+
+@media (max-width: 1023px) {
+  .mobile-span {
+    float: right;
+    position: relative;
+    bottom: 6px; }
+
+  .mobile-p {
+    width: 100%; }
+
+  .desktop-p {
+    display: none !important; } }
+@media (max-width: 1024px) {
+  #form-villa {
+    max-width: 456px; }
+
+  #form-villa {
+    margin-left: -40px; } }
+@media (max-width: 768px) {
+  .leaflet-map-pane {
+    transform: translate3d(402px, 166px, 0px) !important; } }
+@media (max-width: 425px) {
+  .leaflet-map-pane {
+    transform: translate3d(188px, 187px, 0px) !important; } }
+@media (max-width: 375px) {
+  .leaflet-map-pane {
+    transform: translate3d(127px, 201px, 0px) !important; } }
+@media (max-width: 320px) {
+  .leaflet-map-pane {
+    transform: translate3d(74px, 187px, 0px) !important; } }
+.casper {
+  opacity: 0; }
+
+.good-list .good-list__item {
+  color: #999 !important;
+  font-size: 111% !important;
+  padding: 5px 0; }
+  .good-list .good-list__item > * {
+    vertical-align: middle;
+    display: inline-block; }
+  .good-list .good-list__item img {
+    width: 24px;
+    height: 24px;
+    margin: 0; }
+
+/*# sourceMappingURL=snippet_638.css.map */

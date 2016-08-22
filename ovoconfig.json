@@ -1,0 +1,22 @@
+
+
+{
+  "phone"     :   380934555103,
+  "password"  :   "remzhr1.2",
+  "domain"    :   "arenda-vill.ovobox.com",
+
+  "compile_suffix" : "-compiled",
+
+  "use_common":   true,
+  "page_urls" :   [
+    "/",
+    "лучшие-виллы",
+    "аренда-виллы-на-море"
+  ],
+  "snippet_ids" : [
+    679,
+    641,
+    637,
+    638
+  ]
+}
