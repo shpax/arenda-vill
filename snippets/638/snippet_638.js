@@ -27,7 +27,7 @@ var BreadCrumb = function BreadCrumb(text, url) {
     this.text = text;
 };
 
-app.controller('villaCtrl', ['$scope', '$http', 'setCookieFact', '$sce', function ($s, $h, setCookieFact, $sce) {
+app.controller('villaCtrl', ['$scope', '$http', 'setCookieFact', '$sce', 'Database', function ($s, $h, setCookieFact, $sce, localDatabase) {
     $s.setCookieFact = setCookieFact;
     $s.currentVills = []; // CURRENT vills
     $s.villaInfo;
@@ -91,10 +91,22 @@ app.controller('villaCtrl', ['$scope', '$http', 'setCookieFact', '$sce', functio
 
         if (villa.f8) {
             var direction = villa.f8[0];
-            $h.get('/api/data/table?t=' + TABLES.VILLAS + '&where[f8]=' + direction.field_value_id).success(function (data) {
-                if (data && data.length) $s.currentVills = data.map(function (villa) {
-                    villa.img = '/api/data/table?t=428&field=f2&where[f1]=' + villa.field_value_id + '&where[f3]=yes&as=image&count=1';
-                });else $s.currentVills = [];
+            localDatabase.request('/api/data/table?t=' + TABLES.VILLAS + '&where[f8]=' + direction.field_value_id + '&orderBy[f20]=desc&count=9', function (data) {
+                if (data && data.length) {
+                    $s.currentVills = data
+                        .filter(r => r.field_value_id != villa.field_value_id)
+                        .map(r => {
+                            r.priceStr = r.min_price && r.max_price ? `$${villa.min_price} — $${villa.max_price}` : 'по запросу'
+                            return r;
+                        });
+                    $s.currentVills.forEach(villa => {
+                        localDatabase.request('api/data/table?t=' + TABLES.IMAGES + '&where[f1]=' + villa.field_value_id + '&orderBy[f3]=desc&count=1', img => {
+                            if (img && img[0].f2) villa.img = img[0].f2;
+                        })
+                    })
+                } else {
+                    $s.currentVills = [];
+                }
             });
         }
 
@@ -438,7 +450,7 @@ app.controller('villaCtrl', ['$scope', '$http', 'setCookieFact', '$sce', functio
     }
 
     var indexStep = 3;
-    $s.index = indexStep;
+    $s.index = 0;
     $s.incrementIndex = function () {
         $s.index += indexStep;
         if ($s.index >= $s.currentVills.length) {

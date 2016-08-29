@@ -710,15 +710,12 @@ button:focus a,
 
 #liked.blocks .w70 > .w30 ul {
   width: 100%;
-  height: 18px; }
+  height: 36px; }
 
 #liked.blocks .color-line {
-  margin-top: 11px;
   height: 1px;
-  position: absolute;
-  bottom: 41%;
   width: 100%;
-  margin-left: -16px;
+  margin: 11px -16px;
   background-color: rgba(186, 135, 70, 0.5); }
 
 #liked.blocks .w70 > .w30 p {

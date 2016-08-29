@@ -515,7 +515,7 @@ window.addEventListener('load', function () {
 
         $('.locate-to').click(function () {
             $('html, body').animate({
-                scrollTop: $("#map").offset().top - 78
+                scrollTop: $("#map").offset().top - 78 - 100
             }, 1500);
         });
 

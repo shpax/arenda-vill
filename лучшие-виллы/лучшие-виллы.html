@@ -221,8 +221,8 @@
     filter:byRecreationStyle)
    as filterResult track by villa.field_value_id" >
     <p class="w70">
-        <img ng-src={{::villa.img}} 
-        class="openImage none" w="1500" h="1500" gallery="{{type + $index}}" on-finish-render="ngRepeatFinished" />
+        <div style="background-image: url('{{::villa.img}}');"
+        class="openImage none" w="1500" h="1500" gallery="{{type + $index}}" on-finish-render="ngRepeatFinished" ></div>
         <span class="like-villa" data-toggle="liked" ng-class="{'active-like': isFav(villa.field_value_id) == true }" ng-click="addFav(villa.field_value_id, $event); ">
         <!--<img ng-src="{{thumb}}" class="openImage none gallery-thumbnails" gallery="{{type + $parent.$index}}" w="1500" h="1500" ng-repeat="thumb in villa.gallery">-->
     </span>

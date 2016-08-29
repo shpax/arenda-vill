@@ -198,6 +198,7 @@ app.controller('MainPageCtrl', ['$scope', '$http', '$window', '$location', '$roo
                     .map(v => {
                         return {
                             name: v.name || v.f1,
+                            id: v.field_value_id,
                             url: v.f8[0].f3[0].f8 + '/' + v.url
                         }
                     }),
@@ -206,6 +207,7 @@ app.controller('MainPageCtrl', ['$scope', '$http', '$window', '$location', '$roo
                     .map(d => {
                         return {
                             name: d.f1,
+                            id: d.field_value_id,
                             url: d.f3[0].f8 + '/' + d.f6
                         }
                     }),
@@ -214,10 +216,14 @@ app.controller('MainPageCtrl', ['$scope', '$http', '$window', '$location', '$roo
                     .map(s => {
                         return {
                             name: s.f1,
+                            id: s.field_value_id,
                             url: s.region.f8 + '/' + s.f2
                         }
                     })
-            )
+            ). reduce((stuff, item) => {
+                if (!stuff.some(s => s.url == item.url || s.id == item.id || s.name == item.name)) stuff.push(item);
+                return stuff;
+            }, []);
             console.log($s.searchStuff);
         }
     });

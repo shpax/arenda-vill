@@ -133,7 +133,23 @@
 }
 .tabs_item .keys {
     margin-top:48px;
-    width:60%;
+    display: table;
+}
+.tabs_item .keys p {
+    display: table-row;
+}
+.tabs_item .keys span {
+    display: table-cell;
+}
+.tabs_item .keys span:first-child {
+    width: 40%;
+    padding: 6px 0 6px 34px;
+}
+.tabs_item .keys span:last-child {
+    text-align: right;
+}
+.tabs_item .keys span.val:before {
+    content: '';
 }
 .tabs_item p span:before {
     display:block;
@@ -158,6 +174,12 @@
 .tabs_item p span.right {
     float:right;
     color:#333;
+}
+.keys .key {
+    display: inline-block;
+}
+.keys .val {
+    max-width: 60%;
 }
 .tabs_item p span.right:hover {
     color:  #ba8746;

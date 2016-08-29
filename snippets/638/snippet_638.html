@@ -357,15 +357,15 @@
             </form>
         </div>
     </div>
-    <div class="block-width cont" ng-hide="currentVills.length == 1">
-        <div class="block-info" ng-show="$s.currentVills.length">
-            <h1 class="heading-title v-line">Смотрите также</h1>
+    <div class="block-width cont" ng-hide="currentVills.length == 0">
+        <div class="block-info">
+            <h1 class="heading-title v-line">Смотрите также {{currentVills.length}}</h1>
             <div class="arrow-best-right" ng-click="incrementIndex()" ng-hide="currentVills.length < 4"></div>
             <div class="arrow-best-left" ng-click="decrementIndex()" ng-hide="currentVills.length < 4"></div>
             <div id="liked" class="blocks">
                 <div class="w70" ng-repeat="villa in currentVills | limitTo: 3 : index ">
                     <p class="w70">
-                        <img src="{{villa.img}}" ng-click="moreInfo(villa)" />
+                        <img ng-src="{{villa.img}}" ng-click="moreInfo(villa)" />
                         <span ng-class="{'active-like': isFavTarget(villa.field_value_id) == true }" id="favorite-add" ng-click="addFavTarget(villa.field_value_id, $event)"></span>
                     </p>
                     <div class="w30 villa-pointer" ng-click="moreInfo(villa)">
@@ -378,7 +378,7 @@
                         </ul>
                         <div class="color-line"></div>
                         <span>Цена за сутки:</span>
-                        <p>${{villa.min_price}} — ${{villa.max_price}}</p>
+                        <p>{{villa.priceStr}}</p>
                         <button class="button-arrow" ng-click="moreInfo(villa)"><a>подробнее</a></button>
                         <button class="button-add"><a>Добавить в заявку</a></button>
                     </div>

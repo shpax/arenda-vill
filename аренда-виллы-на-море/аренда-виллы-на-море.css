@@ -126,6 +126,9 @@
     position: absolute;
     z-index: 0;
 }
+.info-block ul li.info-not-submenu::before {
+    height: 26px;
+}
 .info-block ul.info-menu > li:first-child::before {
     display: none;
 }
@@ -309,4 +312,7 @@
     .search + button {
         /*width:100%;*/
     }
+}
+.info-not-submenu {
+
 }

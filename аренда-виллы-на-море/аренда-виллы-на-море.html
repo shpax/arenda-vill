@@ -38,7 +38,7 @@
     		</div>
     		<div class="info-block">
     			<ul class="info-menu">
-    				<li ng-class="{'info-submenu': direction.isDirection}" ng-repeat="direction in region.directions track by $index">
+    				<li ng-class="{'info-submenu': direction.isDirection, 'info-not-submenu': !direction.isDirection,}" ng-repeat="direction in region.directions track by $index">
     					<span> 
     						<a href="{{getUrl(direction.url)}}" ng-bind="::direction.name" ng-click="toTargetDirection(direction)"></a>
     					</span>
