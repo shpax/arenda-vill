@@ -1,6 +1,10 @@
 "use strict";
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
 
 var currentSlide = 0;
 var globalSlideshowId;
@@ -511,13 +515,13 @@ app.controller('descriptionCtrl', ['$scope', '$http', 'setCookieFact', '$sce', f
 //         n = currentSlide==last ? 0 : currentSlide+1;
 //         item[currentSlide].classList.remove('fx');
 //         item[n].classList.add('fx');
-//     }   
+//     }  
 //     if (point[currentSlide]) {
 //         point[currentSlide].classList.remove('active');
 //         point[n].classList.add('active');
 //     }
 //     currentSlide = n;
-// } 
+// }
 
 function barChart(w, color, text, deploy) {
 
@@ -550,6 +554,7 @@ function barChart(w, color, text, deploy) {
     var height = 380,
         margin = 30,
 
+
     // color = '#' + 'C49E21';
     months = [{ mon: 'Янв' }, { mon: 'Фев' }, { mon: 'Мар' }, { mon: 'Апр' }, { mon: 'Май' }, { mon: 'Июн' }, { mon: 'Июл' }, { mon: 'Авг' }, { mon: 'Сен' }, { mon: 'Окт' }, { mon: 'Ноя' }, { mon: 'Дек' }];
 
@@ -573,7 +578,7 @@ function barChart(w, color, text, deploy) {
     // длина оси Y = высота контейнера svg - отступ сверху и снизу
     var yAxisLength = height - 2 * margin;
 
-    // функция интерполяции значений на ось Х 
+    // функция интерполяции значений на ось Х
     var scaleX = d3.scale.ordinal().rangeRoundBands([0, xAxisLength + margin], .1).domain(data.map(function (d) {
         return d.mon;
     }));
@@ -584,10 +589,10 @@ function barChart(w, color, text, deploy) {
         var scaleY = d3.scale.linear().domain([300, 0]).range([0, yAxisLength]);
     }
 
-    // создаем ось X  
+    // создаем ось X 
     var xAxis = d3.svg.axis().scale(scaleX).orient("bottom");
 
-    // создаем ось Y                
+    // создаем ось Y               
     var yAxis = d3.svg.axis().scale(scaleY).orient("left");
 
     if (deploy == ".chart-1") {
@@ -597,7 +602,7 @@ function barChart(w, color, text, deploy) {
         yAxis.tickValues([50, 100, 150, 200, 250, 300]);
     }
 
-    // отрисовка оси              
+    // отрисовка оси             
     svg.append("g").attr("class", "x-axis").attr("transform", // сдвиг оси вниз и вправо
     "translate(" + margin + "," + (height - margin) + ")").attr("stroke", color).call(xAxis);
 
@@ -654,7 +659,7 @@ function barChart(w, color, text, deploy) {
     }).attr("height", function (d) {
         return height - scaleY(d.temp) - 60;
     }).attr("fill", color);
-    //   .style("filter", "url(#drop-shadow)");    
+    //   .style("filter", "url(#drop-shadow)");  
 }
 
 var map;
@@ -710,5 +715,7 @@ function initializeMap(coo, directName) {
 }
 
 // Initialize the map
+
+//# sourceMappingURL=snippet_641-compiled.js.map
 
 //# sourceMappingURL=snippet_641-compiled.js.map

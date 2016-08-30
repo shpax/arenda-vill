@@ -279,7 +279,7 @@ app.controller('VillaSearchCtrl', ['$scope', '$http', 'setCookieFact', '$rootSco
           //                   $s.arrDirections.splice(index, 1);
           //               }
           //           })
-          //         }  
+          //         } 
           //         }
 
           //         villa.gallery = gallery2(villa);
@@ -482,7 +482,6 @@ app.controller('VillaSearchCtrl', ['$scope', '$http', 'setCookieFact', '$rootSco
   //     });
   //   });
   // });
-
 
   // Сортировка
   $s.orderByField = 'min_price';
@@ -738,11 +737,11 @@ app.controller('VillaSearchCtrl', ['$scope', '$http', 'setCookieFact', '$rootSco
 
   // if(temp && temp!= '') {
   //   $s.setRecreationStyle(temp);
-  //   localStorage.removeItem('recStyle');    
+  //   localStorage.removeItem('recStyle');   
   // }
 
   // if(localStorage.searchValue) {
-  //   localStorage.removeItem('searchValue');    
+  //   localStorage.removeItem('searchValue');   
   // }
 
   // $s.check = function(check) {
@@ -844,7 +843,7 @@ app.controller('VillaSearchCtrl', ['$scope', '$http', 'setCookieFact', '$rootSco
   //   if(searchValue && searchValue != '') {
   //     if(villa.name.indexOf(searchValue) > -1) {
   //       $s.selectedRecreationStyle.push(villa.recreation_style);
-  //       $s.selectedRecreationStyle.splice(1);    
+  //       $s.selectedRecreationStyle.splice(1);   
   //     }
   //     return villa.name.indexOf(searchValue) > -1;
   //   } else {
@@ -1208,6 +1207,8 @@ $(window).load(function () {
     // $('.'+datatype).toggle();
   });
 });
+
+//# sourceMappingURL=лучшие-виллы-compiled.js.map
 
 //# sourceMappingURL=лучшие-виллы-compiled.js.map
 

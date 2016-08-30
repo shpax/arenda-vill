@@ -207,3 +207,5 @@ app.controller('directionsController', ['$scope', '$http', function ($s, $h) {
 //# sourceMappingURL=аренда-виллы-на-море-compiled.js.map
 
 //# sourceMappingURL=аренда-виллы-на-море-compiled.js.map
+
+//# sourceMappingURL=аренда-виллы-на-море-compiled.js.map

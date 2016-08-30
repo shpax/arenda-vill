@@ -52,7 +52,7 @@ app.filter('endOfWordGuests', function () {
     }
   };
 });
-app.controller('VillaSearchCtrl', ['$scope', '$http', 'setCookieFact', '$rootScope', '$routeParams', '$location', "SearchPageFact",'Database', function ($s, $h, setCookieFact, $rootScope, $routeParams, $location, SearchPageFact, db) {
+app.controller('VillaSearchCtrl', ['$scope', '$http', 'setCookieFact', '$rootScope', '$routeParams', '$location', "SearchPageFact", 'Database', function ($s, $h, setCookieFact, $rootScope, $routeParams, $location, SearchPageFact, db) {
 
   $s.directions = [];
   $s.arrDirections = [];
@@ -142,320 +142,322 @@ app.controller('VillaSearchCtrl', ['$scope', '$http', 'setCookieFact', '$rootSco
     return result;
   };
 
-  db.request('/api/data/table?t=428&connect[f1]=0',images => {
-    images = images
-        .filter(img => img.f1 && img.f2)
-        .map(img => {
-          img.f1 = img.f1.replace(/\|/g,'');
-          return img;
-        });
-    db.request('/api/data/table?t=342',function (vills) {
+  db.request('/api/data/table?t=428&connect[f1]=0', function (images) {
+    images = images.filter(function (img) {
+      return img.f1 && img.f2;
+    }).map(function (img) {
+      img.f1 = img.f1.replace(/\|/g, '');
+      return img;
+    });
+    db.request('/api/data/table?t=342', function (vills) {
 
-      vills.forEach(villa => {
-        villa.images = images
-            .filter(img => (img.f1 == villa.field_value_id) && img.f2)
-            .sort((v1,v2)=> {
+      vills.forEach(function (villa) {
+        villa.images = images.filter(function (img) {
+          return img.f1 == villa.field_value_id && img.f2;
+        }).sort(function (v1, v2) {
           if (v1.f3 == v2.f3) return 0;
           if (v1.f3 == 'yes') return -1;
           return 1;
         });
-        villa.img = (villa.images[0] || {f2:''}).f2;
+        villa.img = (villa.images[0] || { f2: '' }).f2;
       });
 
-    if (vills && vills.length) {
-      var gallery1 = function gallery1(additionalFields) {
-        return additionalFields[0].f9;
-      };
+      if (vills && vills.length) {
+        var gallery1 = function gallery1(additionalFields) {
+          return additionalFields[0].f9;
+        };
 
-      var gallery2 = function gallery2(villa) {
-        return villa.images.map(img => img.f2);
-      };
-
-      $s.vills = villsGlobal = vills.filter(function (villa) {
-        return !!villa.url;
-      });
-      checkVillaStatus($s.vills);
-      var roomMinValue = 999,
-          roomMaxValue = 0,
-          guestMinValue = 999,
-          guestMaxValue = 0,
-          minPrice = 999,
-          maxPrice = 0,
-          favouriteVillsFromCookies = setCookieFact.getFavouritesVill();
-      vills.forEach(function (villa) {
-        // get max/min rooms and persons value
-        $s.villsFieldValueIdArr.push(villa.field_value_id);
-        villa.r_counter = isParamCorrect(villa, villa.r_counter, 'r_counter');
-        villa.person_counter = isParamCorrect(villa, villa.person_counter, 'person_counter');
-        villa.min_price = isParamCorrect(villa, villa.min_price, 'min_price');
-        villa.max_price = isParamCorrect(villa, villa.max_price, 'max_price');
-
-        if (villa.min_price && villa.max_price) {
-          villa.priceStr = '$' + villa.min_price + ' — $' + villa.max_price;
-        } else {
-          villa.priceStr = 'цена по запросу';
-        }
-
-        villa.inFavourites = false;
-        villa.inFavourites = favouriteVillsFromCookies ? favouriteVillsFromCookies.some(isEqual) : false;
-        var objDirection = {};
-        if (villa.f8) {
-          objDirection.name = villa.f8[0].f1;
-          objDirection.idRegion = +villa.f8[0].f3.replace(/\|/g, "");
-          objDirection.showDir = true;
-          objDirection.villCount = countVills(vills, objDirection.name);
-          $s.arrDirections.push(objDirection);
-          //получаем массив id по которым получим регионы в 343 таблице
-          $s.regionsId.push(+villa.f8[0].f3.replace(/\|/g, ""));
-        }
-        function countVills(vills, direction) {
-          var counter = 0;
-          vills.forEach(function (villa) {
-            if (villa.f8 != undefined && villa.f8[0].f1 == direction) {
-              counter += 1;
-            }
+        var gallery2 = function gallery2(villa) {
+          return villa.images.map(function (img) {
+            return img.f2;
           });
-          return counter;
-        }
-        function isEqual(cookieId) {
-          return villa.field_value_id == cookieId;
-        }
-        if (villa.r_counter > roomMaxValue) {
-          roomMaxValue = parseInt(villa.r_counter);
-        }
-        if (villa.r_counter < roomMinValue) {
-          roomMinValue = parseInt(villa.r_counter);
-        }
-        if (villa.person_counter > guestMaxValue) {
-          guestMaxValue = parseInt(villa.person_counter);
-        }
+        };
 
-        if (villa.person_counter < guestMinValue) {
-          guestMinValue = parseInt(villa.person_counter);
-        }
-        if (villa.min_price < minPrice) {
-          if (villa.min_price !== '') {
-            minPrice = parseInt(villa.min_price);
+        $s.vills = villsGlobal = vills.filter(function (villa) {
+          return !!villa.url;
+        });
+        checkVillaStatus($s.vills);
+        var roomMinValue = 999,
+            roomMaxValue = 0,
+            guestMinValue = 999,
+            guestMaxValue = 0,
+            minPrice = 999,
+            maxPrice = 0,
+            favouriteVillsFromCookies = setCookieFact.getFavouritesVill();
+        vills.forEach(function (villa) {
+          // get max/min rooms and persons value
+          $s.villsFieldValueIdArr.push(villa.field_value_id);
+          villa.r_counter = isParamCorrect(villa, villa.r_counter, 'r_counter');
+          villa.person_counter = isParamCorrect(villa, villa.person_counter, 'person_counter');
+          villa.min_price = isParamCorrect(villa, villa.min_price, 'min_price');
+          villa.max_price = isParamCorrect(villa, villa.max_price, 'max_price');
+
+          if (villa.min_price && villa.max_price) {
+            villa.priceStr = '$' + villa.min_price + ' — $' + villa.max_price;
+          } else {
+            villa.priceStr = 'цена по запросу';
           }
-        }
 
-        if (villa.max_price > maxPrice) {
-          if (villa.max_price !== '') {
-            maxPrice = parseInt(villa.max_price);
+          villa.inFavourites = false;
+          villa.inFavourites = favouriteVillsFromCookies ? favouriteVillsFromCookies.some(isEqual) : false;
+          var objDirection = {};
+          if (villa.f8) {
+            objDirection.name = villa.f8[0].f1;
+            objDirection.idRegion = +villa.f8[0].f3.replace(/\|/g, "");
+            objDirection.showDir = true;
+            objDirection.villCount = countVills(vills, objDirection.name);
+            $s.arrDirections.push(objDirection);
+            //получаем массив id по которым получим регионы в 343 таблице
+            $s.regionsId.push(+villa.f8[0].f3.replace(/\|/g, ""));
           }
-        }
+          function countVills(vills, direction) {
+            var counter = 0;
+            vills.forEach(function (villa) {
+              if (villa.f8 != undefined && villa.f8[0].f1 == direction) {
+                counter += 1;
+              }
+            });
+            return counter;
+          }
+          function isEqual(cookieId) {
+            return villa.field_value_id == cookieId;
+          }
+          if (villa.r_counter > roomMaxValue) {
+            roomMaxValue = parseInt(villa.r_counter);
+          }
+          if (villa.r_counter < roomMinValue) {
+            roomMinValue = parseInt(villa.r_counter);
+          }
+          if (villa.person_counter > guestMaxValue) {
+            guestMaxValue = parseInt(villa.person_counter);
+          }
 
-        // if($s.recreationStyles && $s.recreationStyles.length) {
-        //     var villaRecreationStyle = villa.recreation_style,
-        //         add = true;
-        //     $s.recreationStyles.forEach(function(style) {
-        //         if(style == villaRecreationStyle) {
-        //             add = false;
-        //         }
-        //
-        //         add ? $s.recreationStyles.push(villaRecreationStyle) : "";
-        //     })
-        // } else {
-        //     $s.recreationStyles.push(villa.recreation_style);
-        // }
-        //
-        // $h.get('api/data/connectedWith?r='+ villa.field_value_id)
-        // .success(function(result) {
-        //   if(result) {
-        //      debugger;
-        //         villa.additionalFields = filterByTableId(result, 364);
-        //         if(villa.additionalFields[0]) {
+          if (villa.person_counter < guestMinValue) {
+            guestMinValue = parseInt(villa.person_counter);
+          }
+          if (villa.min_price < minPrice) {
+            if (villa.min_price !== '') {
+              minPrice = parseInt(villa.min_price);
+            }
+          }
 
-        //           villa.best = villa.additionalFields[0].f6 ? parseInt(villa.additionalFields[0].f6) : 0; 
-        //           villa.date_of_addition = villa.additionalFields[0].f5 ? new Date(villa.additionalFields[0].f5) : 0;
-        //           villa.gallery = gallery1(villa.additionalFields);
+          if (villa.max_price > maxPrice) {
+            if (villa.max_price !== '') {
+              maxPrice = parseInt(villa.max_price);
+            }
+          }
 
-        //           if(villa.additionalFields[0].f10 == 'hide') {
-        //           $s.arrDirections.forEach(function(dir){
-        //               if(dir.name == villa.f8[0].f1) {
-        //                   var index = $s.arrDirections.indexOf(dir);
-        //                   $s.arrDirections.splice(index, 1);
-        //               }
-        //           })
-        //         }   
-        //         }
+          // if($s.recreationStyles && $s.recreationStyles.length) {
+          //     var villaRecreationStyle = villa.recreation_style,
+          //         add = true;
+          //     $s.recreationStyles.forEach(function(style) {
+          //         if(style == villaRecreationStyle) {
+          //             add = false;
+          //         }
+          //
+          //         add ? $s.recreationStyles.push(villaRecreationStyle) : "";
+          //     })
+          // } else {
+          //     $s.recreationStyles.push(villa.recreation_style);
+          // }
+          //
+          // $h.get('api/data/connectedWith?r='+ villa.field_value_id)
+          // .success(function(result) {
+          //   if(result) {
+          //      debugger;
+          //         villa.additionalFields = filterByTableId(result, 364);
+          //         if(villa.additionalFields[0]) {
 
-        //         villa.gallery = gallery2(villa);
+          //           villa.best = villa.additionalFields[0].f6 ? parseInt(villa.additionalFields[0].f6) : 0;
+          //           villa.date_of_addition = villa.additionalFields[0].f5 ? new Date(villa.additionalFields[0].f5) : 0;
+          //           villa.gallery = gallery1(villa.additionalFields);
 
-        //   }
+          //           if(villa.additionalFields[0].f10 == 'hide') {
+          //           $s.arrDirections.forEach(function(dir){
+          //               if(dir.name == villa.f8[0].f1) {
+          //                   var index = $s.arrDirections.indexOf(dir);
+          //                   $s.arrDirections.splice(index, 1);
+          //               }
+          //           })
+          //         }  
+          //         }
+
+          //         villa.gallery = gallery2(villa);
+
+          //   }
+          // });
+        });
+        // var dm = new DataManager();
+        // //debugger;
+        // dm.table(428).where('f3', 'yes').where('f1', $s.villsFieldValueIdArr).success(function (imgTable) {
+        //   debugger;
+        //   console.log(imgTable);
+        //   // $s.vills = $s.vills.map(function(villa){
+        //   //     var imgUrl;
+        //   //     imgTable.forEach(function(img){
+        //   //         if (villa.field_value_id == img.f1.split('|')[1]){
+        //   //             imgUrl = img.f2;
+        //   //         }
+        //   //     });
+        //   //     if(imgUrl){
+        //   //         villa.img = imgUrl;
+        //   //     }
+        //   //     return villa;
+        //   // });
+        //   $s.$apply();
         // });
-      });
-      // var dm = new DataManager();
-      // //debugger;
-      // dm.table(428).where('f3', 'yes').where('f1', $s.villsFieldValueIdArr).success(function (imgTable) {
-      //   debugger;
-      //   console.log(imgTable);
-      //   // $s.vills = $s.vills.map(function(villa){
-      //   //     var imgUrl;
-      //   //     imgTable.forEach(function(img){
-      //   //         if (villa.field_value_id == img.f1.split('|')[1]){
-      //   //             imgUrl = img.f2;
-      //   //         }
-      //   //     });
-      //   //     if(imgUrl){
-      //   //         villa.img = imgUrl;
-      //   //     }
-      //   //     return villa;
-      //   // });
-      //   $s.$apply();
-      // });
 
-      $s.rCounts = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-      $s.gCounts = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-      // var rCounts = parseInt(roomMaxValue / roomMinValue); //count and write rooms value to select options array
-      // var rCount = roomMinValue;
-      // while(rCount <= roomMaxValue) {
-      //     //debugger;
-      //   if(rCount + rCounts <= roomMaxValue) {
-      //     $s.rCounts.push(rCount);
-      //   } else {
-      //     $s.rCounts.push(roomMaxValue);
-      //   }
-      //   rCount += rCounts;
-      // }
+        $s.rCounts = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        $s.gCounts = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        // var rCounts = parseInt(roomMaxValue / roomMinValue); //count and write rooms value to select options array
+        // var rCount = roomMinValue;
+        // while(rCount <= roomMaxValue) {
+        //     //debugger;
+        //   if(rCount + rCounts <= roomMaxValue) {
+        //     $s.rCounts.push(rCount);
+        //   } else {
+        //     $s.rCounts.push(roomMaxValue);
+        //   }
+        //   rCount += rCounts;
+        // }
 
-      // var gStep = parseInt(guestMaxValue / guestMinValue); //count and write guests value to select options array
-      // var gCount = guestMinValue;
-      // while(gCount <= guestMaxValue) {
-      //   if(gCount + gStep <= guestMaxValue) {
-      //     $s.gCounts.push(gCount);
-      //   } else {
-      //     $s.gCounts.push(guestMaxValue);
-      //   }
-      //   gCount += gStep;
-      // }
+        // var gStep = parseInt(guestMaxValue / guestMinValue); //count and write guests value to select options array
+        // var gCount = guestMinValue;
+        // while(gCount <= guestMaxValue) {
+        //   if(gCount + gStep <= guestMaxValue) {
+        //     $s.gCounts.push(gCount);
+        //   } else {
+        //     $s.gCounts.push(guestMaxValue);
+        //   }
+        //   gCount += gStep;
+        // }
 
-      // set min/max prices
-      minPrice = Math.floor(minPrice / 100) * 100;
-      maxPrice = Math.ceil(maxPrice / 100) * 100;
-      $s.selectedMinPrice = $s.minPrice = $s.resetMinPrice = minPrice;
-      $s.selectedMaxPrice = $s.maxPrice = $s.resetMaxPrice = maxPrice;
+        // set min/max prices
+        minPrice = Math.floor(minPrice / 100) * 100;
+        maxPrice = Math.ceil(maxPrice / 100) * 100;
+        $s.selectedMinPrice = $s.minPrice = $s.resetMinPrice = minPrice;
+        $s.selectedMaxPrice = $s.maxPrice = $s.resetMaxPrice = maxPrice;
 
-      jQuery("#slider").slider({
-        min: minPrice,
-        max: maxPrice,
-        values: [minPrice, maxPrice],
-        range: true,
-        step: 100,
-        stop: function stop(event, ui) {
-          $s.selectedMinPrice = $s.minPrice = jQuery("#slider").slider("values", 0);
-          jQuery("input#minCost").val(jQuery("#slider").slider("values", 0));
-          $s.selectedMaxPrice = $s.maxPrice = jQuery("#slider").slider("values", 1);
-          jQuery("input#maxCost").val(jQuery("#slider").slider("values", 1));
-          $s.$digest();
-        },
-        slide: function slide(event, ui) {
-          $s.selectedMinPrice = $s.minPrice = jQuery("#slider").slider("values", 0);
-          jQuery("input#minCost").val(jQuery("#slider").slider("values", 0));
-          $s.selectedMaxPrice = $s.maxPrice = jQuery("#slider").slider("values", 1);
-          jQuery("input#maxCost").val(jQuery("#slider").slider("values", 1));
-        }
-      });
-
-      jQuery("input#minCost").keyup(function () {
-        var value1 = jQuery("input#minCost").val();
-        var value2 = jQuery("input#maxCost").val();
-
-        if (parseInt(value1) > parseInt(value2)) {
-          value1 = value2;
-          jQuery("input#minCost").val(value1);
-        }
-        jQuery("#slider").slider("values", 0, value1);
-        $s.selectedMinPrice = value1;
-      });
-
-      jQuery("input#maxCost").keyup(function () {
-        var value1 = jQuery("input#minCost").val();
-        var value2 = jQuery("input#maxCost").val();
-
-        if (value2 > maxPrice) {
-          value2 = maxPrice;jQuery("input#maxCost").val(maxPrice);
-        }
-        if (parseInt(value1) > parseInt(value2)) {
-          value2 = value1;
-          jQuery("input#maxCost").val(value2);
-        }
-        jQuery("#slider").slider("values", 1, value2);
-        $s.selectedMaxPrice = value2;
-      });
-      jQuery("#button-reset").click(function () {
-        jQuery("#slider").slider({ values: [$s.resetMinPrice, $s.resetMaxPrice] });
-      });
-
-      // !!! set min/max prices !!!
-    } else {}
-    $s.loading = false;
-
-    // удаление повторов из списка направлений
-    //debugger;
-    $s.arrDirections = unicObjListByName($s.arrDirections);
-    $s.regionsId = unic($s.regionsId);
-
-    db.request('/api/data/table?t=343',function (regions) {
-      regions.forEach(function (region) {
-        if (region.f3 != undefined) {
-          if ($s.regionsId.indexOf(+region.f3[0].field_value_id) !== -1) {
-            var regionNameAndId = {};
-            regionNameAndId.name = region.f3[0].f1;
-            regionNameAndId.id = +region.f3[0].field_value_id;
-            $s.regions.push(region.f3[0].f1);
-            $s.regionsMapping.push(regionNameAndId);
+        jQuery("#slider").slider({
+          min: minPrice,
+          max: maxPrice,
+          values: [minPrice, maxPrice],
+          range: true,
+          step: 100,
+          stop: function stop(event, ui) {
+            $s.selectedMinPrice = $s.minPrice = jQuery("#slider").slider("values", 0);
+            jQuery("input#minCost").val(jQuery("#slider").slider("values", 0));
+            $s.selectedMaxPrice = $s.maxPrice = jQuery("#slider").slider("values", 1);
+            jQuery("input#maxCost").val(jQuery("#slider").slider("values", 1));
+            $s.$digest();
+          },
+          slide: function slide(event, ui) {
+            $s.selectedMinPrice = $s.minPrice = jQuery("#slider").slider("values", 0);
+            jQuery("input#minCost").val(jQuery("#slider").slider("values", 0));
+            $s.selectedMaxPrice = $s.maxPrice = jQuery("#slider").slider("values", 1);
+            jQuery("input#maxCost").val(jQuery("#slider").slider("values", 1));
           }
-        }
-      });
-      $s.regions = unic($s.regions);
-      $s.regions = $s.regions.map(function (item) {
-        var makedObj = {};
-        makedObj.name = item;
-        return makedObj;
-      });
-      $s.regionsMapping = unicObjListById($s.regionsMapping);
+        });
 
-      checkboxlayer($s.regions); // стилизируем мультиселект
-      // setHandlers();
+        jQuery("input#minCost").keyup(function () {
+          var value1 = jQuery("input#minCost").val();
+          var value2 = jQuery("input#maxCost").val();
+
+          if (parseInt(value1) > parseInt(value2)) {
+            value1 = value2;
+            jQuery("input#minCost").val(value1);
+          }
+          jQuery("#slider").slider("values", 0, value1);
+          $s.selectedMinPrice = value1;
+        });
+
+        jQuery("input#maxCost").keyup(function () {
+          var value1 = jQuery("input#minCost").val();
+          var value2 = jQuery("input#maxCost").val();
+
+          if (value2 > maxPrice) {
+            value2 = maxPrice;jQuery("input#maxCost").val(maxPrice);
+          }
+          if (parseInt(value1) > parseInt(value2)) {
+            value2 = value1;
+            jQuery("input#maxCost").val(value2);
+          }
+          jQuery("#slider").slider("values", 1, value2);
+          $s.selectedMaxPrice = value2;
+        });
+        jQuery("#button-reset").click(function () {
+          jQuery("#slider").slider({ values: [$s.resetMinPrice, $s.resetMaxPrice] });
+        });
+
+        // !!! set min/max prices !!!
+      } else {}
+      $s.loading = false;
+
+      // удаление повторов из списка направлений
+      //debugger;
+      $s.arrDirections = unicObjListByName($s.arrDirections);
+      $s.regionsId = unic($s.regionsId);
+
+      db.request('/api/data/table?t=343', function (regions) {
+        regions.forEach(function (region) {
+          if (region.f3 != undefined) {
+            if ($s.regionsId.indexOf(+region.f3[0].field_value_id) !== -1) {
+              var regionNameAndId = {};
+              regionNameAndId.name = region.f3[0].f1;
+              regionNameAndId.id = +region.f3[0].field_value_id;
+              $s.regions.push(region.f3[0].f1);
+              $s.regionsMapping.push(regionNameAndId);
+            }
+          }
+        });
+        $s.regions = unic($s.regions);
+        $s.regions = $s.regions.map(function (item) {
+          var makedObj = {};
+          makedObj.name = item;
+          return makedObj;
+        });
+        $s.regionsMapping = unicObjListById($s.regionsMapping);
+
+        checkboxlayer($s.regions); // стилизируем мультиселект
+        // setHandlers();
+      });
+
+      //функция удаления дублирующих значений из массива
+      function unic(arr) {
+        var result = [];
+        nextElem: for (var i = 0; i < arr.length; i++) {
+          var direction = arr[i];
+          for (var j = 0; j < result.length; j++) {
+            if (result[j] === direction) continue nextElem;
+          }
+          result.push(direction);
+        }
+        return result;
+      }
+      function unicObjListById(arr) {
+        var result = [];
+        nextElem: for (var i = 0; i < arr.length; i++) {
+          var arrElem = arr[i].id;
+          for (var j = 0; j < result.length; j++) {
+            if (result[j].id === arrElem) continue nextElem;
+          }
+          result.push(arr[i]);
+        }
+        return result;
+      }
+      function unicObjListByName(arr) {
+        var result = [];
+        nextElem: for (var i = 0; i < arr.length; i++) {
+          var arrElem = arr[i].name;
+          for (var j = 0; j < result.length; j++) {
+            if (result[j].name === arrElem) continue nextElem;
+          }
+          result.push(arr[i]);
+        }
+        return result;
+      }
     });
-
-    //функция удаления дублирующих значений из массива
-    function unic(arr) {
-      var result = [];
-      nextElem: for (var i = 0; i < arr.length; i++) {
-        var direction = arr[i];
-        for (var j = 0; j < result.length; j++) {
-          if (result[j] === direction) continue nextElem;
-        }
-        result.push(direction);
-      }
-      return result;
-    }
-    function unicObjListById(arr) {
-      var result = [];
-      nextElem: for (var i = 0; i < arr.length; i++) {
-        var arrElem = arr[i].id;
-        for (var j = 0; j < result.length; j++) {
-          if (result[j].id === arrElem) continue nextElem;
-        }
-        result.push(arr[i]);
-      }
-      return result;
-    }
-    function unicObjListByName(arr) {
-      var result = [];
-      nextElem: for (var i = 0; i < arr.length; i++) {
-        var arrElem = arr[i].name;
-        for (var j = 0; j < result.length; j++) {
-          if (result[j].name === arrElem) continue nextElem;
-        }
-        result.push(arr[i]);
-      }
-      return result;
-    }
   });
-  })
   function isParamCorrect(villa, param, paramKey) {
     var testValue = parseInt(param);
     var result = null;
@@ -468,19 +470,19 @@ app.controller('VillaSearchCtrl', ['$scope', '$http', 'setCookieFact', '$rootSco
     }
     return result;
   }
-  function checkVillaStatus(array) {
-    // $h.get('/api/data/table?t=364').success(function (vills) {
-    //   vills.forEach(function (villa) {
-    //     array.forEach(function (elem) {
-    //
-    //       if (villa.f1 && villa.f1[0].f1 && elem.name == villa.f1[0].f1 && villa.status == 'hide') {
-    //         var position = array.indexOf(elem);
-    //         array.splice(position, 1);
-    //       }
-    //     });
-    //   });
-    // });
-  }
+  function checkVillaStatus(array) {}
+  // $h.get('/api/data/table?t=364').success(function (vills) {
+  //   vills.forEach(function (villa) {
+  //     array.forEach(function (elem) {
+  //
+  //       if (villa.f1 && villa.f1[0].f1 && elem.name == villa.f1[0].f1 && villa.status == 'hide') {
+  //         var position = array.indexOf(elem);
+  //         array.splice(position, 1);
+  //       }
+  //     });
+  //   });
+  // });
+
 
   // Сортировка
   $s.orderByField = 'min_price';
@@ -736,11 +738,11 @@ app.controller('VillaSearchCtrl', ['$scope', '$http', 'setCookieFact', '$rootSco
 
   // if(temp && temp!= '') {
   //   $s.setRecreationStyle(temp);
-  //   localStorage.removeItem('recStyle');     
+  //   localStorage.removeItem('recStyle');    
   // }
 
   // if(localStorage.searchValue) {
-  //   localStorage.removeItem('searchValue');     
+  //   localStorage.removeItem('searchValue');    
   // }
 
   // $s.check = function(check) {
@@ -842,8 +844,8 @@ app.controller('VillaSearchCtrl', ['$scope', '$http', 'setCookieFact', '$rootSco
   //   if(searchValue && searchValue != '') {
   //     if(villa.name.indexOf(searchValue) > -1) {
   //       $s.selectedRecreationStyle.push(villa.recreation_style);
-  //       $s.selectedRecreationStyle.splice(1);     
-  //     } 
+  //       $s.selectedRecreationStyle.splice(1);    
+  //     }
   //     return villa.name.indexOf(searchValue) > -1;
   //   } else {
   //     return true;
@@ -892,7 +894,7 @@ app.controller('VillaSearchCtrl', ['$scope', '$http', 'setCookieFact', '$rootSco
   }
 
   function regions() {
-    db.request('/api/data/table?t=343',function (directions) {
+    db.request('/api/data/table?t=343', function (directions) {
 
       if (directions && directions.length) {
         $s.directions = directions;
@@ -1008,9 +1010,9 @@ app.directive('onFinishRender', function ($timeout) {
 function checkboxlayer(regions) {
   var mSlct = document.querySelector('.checkboxLayer');
   if (!mSlct) {
-    setTimeout(function() {
+    setTimeout(function () {
       checkboxlayer(regions);
-    },100);
+    }, 100);
     return;
   }
   mSlct.style.minWidth = '0px';
@@ -1206,5 +1208,7 @@ $(window).load(function () {
     // $('.'+datatype).toggle();
   });
 });
+
+//# sourceMappingURL=лучшие-виллы-compiled.js.map
 
 //# sourceMappingURL=лучшие-виллы-compiled.js.map

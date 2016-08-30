@@ -331,10 +331,10 @@
         </div>
         <div class="availability-block mobile">
             <div class="info-container">
-                <a class="arrow arrow-left" href="" ng-click="prevVilla()">
+                <a class="arrow arrow-left" href="" ng-click="prevVilla()" ng-show="currentVIlls.length">
                     <h4 class="desktop" ng-bind="prevVillName"></h4><span class="desktop"></span>
                 </a>
-                <a class="arrow arrow-right" href="" ng-click="nextVilla()">
+                <a class="arrow arrow-right" href="" ng-click="nextVilla()" ng-show="currentVIlls.length">
                     <span class="desktop"></span><h4 class="desktop" ng-bind="nexVillName"></h4>
                 </a>
             </div>

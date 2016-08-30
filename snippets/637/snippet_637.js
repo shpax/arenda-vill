@@ -10,7 +10,7 @@ var TABLES = {
     IMAGES: 428
 };
 
-app.controller('regionCtrl', ['$scope', '$http', 'setCookieFact', function ($s, $h, setCookieFact) {
+app.controller('regionCtrl', ['$scope', '$http', 'setCookieFact', 'Database', function ($s, $h, setCookieFact, db) {
     $s.targetRegion;
     $s.titleRegion;
     $s.pretext;
@@ -112,13 +112,7 @@ app.controller('regionCtrl', ['$scope', '$http', 'setCookieFact', function ($s, 
     };
 
     $s.moreInfo = function (villa) {
-        var t = villa.name.split(" ").map(function (word) {
-            return word.charAt(0).toLowerCase() + word.slice(1);
-        });
-        var villaUrl = t.reduce(function (prev, curr) {
-            return prev + "-" + curr;
-        });
-        window.location = window.location.origin + "/" + villaUrl;
+        window.location = window.location.origin + "/" + villa.url;
     };
     $s.locateToDirections = function () {
         window.location = 'http://arenda-vill.com/аренда-виллы-на-море';
@@ -155,7 +149,7 @@ app.controller('regionCtrl', ['$scope', '$http', 'setCookieFact', function ($s, 
 
         $h.get('/api/data/table?t=' + TABLES.DIRECTIONS).success(function (directions) {
             directions.forEach(function (dir) {
-                if (dir.f3 != undefined && dir.f3[0].f1 == $s.targetRegion[0].f1 && dir.f7) {
+                if (dir.f3 != undefined && dir.f3[0].f1 == $s.targetRegion[0].f1 && dir.f5) {
                     var coords = [];
                     if (coords = dir.f5.match(/([\d.]+)\s*,\s*([\d.]+)/)) $s.dirCoordinates.push({
                         name: dir.f1,
@@ -197,51 +191,46 @@ app.controller('regionCtrl', ['$scope', '$http', 'setCookieFact', function ($s, 
 
     $h.get("api/data/tableRows?r=" + regId).success(function (data) {
         $s.regionId = data[0].field_value_id;
-        $h.get('/api/data/table?t=' + TABLES.VILLAS + '&connect[f8]=2').success(handleVillas);
+        db.request('/api/data/table?t=342&connect[f8]=3', handleVillas);
     });
 
     function handleVillas(vills) {
 
         var favouriteVillsFromCookies = setCookieFact.getFavouritesVill();
 
-        vills.forEach(function (vill) {
-
-            var villRegionId;
+        vills.filter(function (villa) {
             try {
-                villRegionId = vill.f8[0].f3.match(/\d+/).pop();
+                return villa.f8[0].f3[0].field_value_id == $s.regionId && villa.url;
             } catch (e) {
-                villRegionId = null;
+                return false;
             }
+        }).forEach(function (vill) {
+            $s.currentVills.push(vill);
 
-            if (villRegionId === $s.regionId) {
-                $s.currentVills.push(vill);
+            vill.inFavourites = false;
+            vill.inFavourites = favouriteVillsFromCookies ? favouriteVillsFromCookies.some(function (cookieId) {
+                return vill.field_value_id == cookieId;
+            }) : false;
 
-                vill.inFavourites = false;
-                vill.inFavourites = favouriteVillsFromCookies ? favouriteVillsFromCookies.some(function (cookieId) {
-                    return vill.field_value_id == cookieId;
-                }) : false;
-
-                checkVillaStatus($s.currentVills);
-            }
+            checkVillaStatus($s.currentVills);
         });
 
-        $h.get('/api/data/table?t=' + TABLES.ADDITIONAL_FIELDS).success(handleAdditionalFields);
+        db.request('/api/data/table?t=' + TABLES.IMAGES + '&connect[f1]=0', handleImages);
     }
 
-    function handleAdditionalFields(rows) {
-
-        var table_id = TABLES.ADDITIONAL_FIELDS;
-
-        rows.filter(function (row) {
-            return row.f1;
-        }).forEach(function (row) {
-            row.villaId = row.f1[0].field_value_id;
-            $s.currentVills.some(function (villa) {
-                if (villa.field_value_id == row.villaId) {
-                    var values = [row];
-                    villa.addFields = { table_id: table_id, values: values };
-                }
+    function handleImages(rows) {
+        rows = rows.filter(function (row) {
+            return !!row.f1;
+        });
+        $s.currentVills.forEach(function (villa) {
+            villa.images = rows.filter(function (imageRow) {
+                return imageRow.f1.indexOf(villa.field_value_id) != -1;
+            }).sort(function (a, b) {
+                if (a.f3 == b.f3) return 0;
+                if (a.f3 == 'yes') return -1;
+                return 1;
             });
+            villa.image = (villa.images[0] || { f2: '' }).f2;
         });
     }
 
@@ -524,6 +513,7 @@ window.addEventListener('load', function () {
         galleryItems.each(function () {
             var container = $(this),
 
+
             // create slider dots
             sliderDots = createSliderDots(container);
             //check if item is on sale
@@ -642,5 +632,7 @@ window.addEventListener('load', function () {
         // 	}
     });
 });
+
+//# sourceMappingURL=snippet_637-compiled.js.map
 
 //# sourceMappingURL=snippet_637-compiled.js.map

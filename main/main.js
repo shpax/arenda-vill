@@ -1,28 +1,29 @@
+"use strict";
 
-var POPULAR_DIRECTIONS = ["ница","ницца", "канны", "сен-тропе", "тоскана", "ибица", "доминикана", "бали", "марбелья", "сейшеллы", "мальдивы", "куршевель"];
+var POPULAR_DIRECTIONS = ["ница", "ницца", "канны", "сен-тропе", "тоскана", "ибица", "доминикана", "бали", "марбелья", "сейшеллы", "мальдивы", "куршевель"];
 
 var FIELDS = {
-    NAME                : 'f1',
-    META_TITLE          : 'f2',
-    META_DESC           : 'f5',
-    META_KEYWORDS       : 'f4',
-    MIN_PRICE           : 'f3',
-    MAX_PRICE           : 'f21',
-    OBJECT_TYPE         : 'f6',
-    RECREATION_STYLE    : 'f7',
-    DIRECTION           : 'f8',
-    BEDROOMS            : 'f9',
-    BATHS               : 'f10',
-    PEOPLE              : 'f11',
-    BENEFITS            : 'f12',
-    DESCRIPTION         : 'f13',
-    COORDS              : 'f14',
-    ADDITIONAL_SERVICE  : 'f15',
-    BEDROOMS_DESC       : 'f16',
-    ADDRESS             : 'f17',
-    URL                 : 'f18',
-    SERVICES            : 'f19',
-    STATUS              : 'f20'
+    NAME: 'f1',
+    META_TITLE: 'f2',
+    META_DESC: 'f5',
+    META_KEYWORDS: 'f4',
+    MIN_PRICE: 'f3',
+    MAX_PRICE: 'f21',
+    OBJECT_TYPE: 'f6',
+    RECREATION_STYLE: 'f7',
+    DIRECTION: 'f8',
+    BEDROOMS: 'f9',
+    BATHS: 'f10',
+    PEOPLE: 'f11',
+    BENEFITS: 'f12',
+    DESCRIPTION: 'f13',
+    COORDS: 'f14',
+    ADDITIONAL_SERVICE: 'f15',
+    BEDROOMS_DESC: 'f16',
+    ADDRESS: 'f17',
+    URL: 'f18',
+    SERVICES: 'f19',
+    STATUS: 'f20'
 };
 
 app.filter('endOfWordVills', function () {
@@ -65,19 +66,17 @@ app.controller('MainPageCtrl', ['$scope', '$http', '$window', '$location', '$roo
     localStorage.removeItem('searchValue');
 
     $s.villaImg = function (villa) {
-        if (villa.image) return villa.image;
-        else {
-            $h
-                .get('/api/data/table?t=428&field=f2&where[f1]=' + villa.field_value_id + '&orderBy[f3]=desc&count=1')
-                .success(img => villa.image = img);
+        if (villa.image) return villa.image;else {
+            $h.get('/api/data/table?t=428&field=f2&where[f1]=' + villa.field_value_id + '&orderBy[f3]=desc&count=1').success(function (img) {
+                return villa.image = img;
+            });
             villa.image = true;
             return '';
         }
-
     };
 
     // initialization
-    db.request('/api/data/table?t=342&connect[f8]=3',function (rows) {
+    db.request('/api/data/table?t=342&connect[f8]=3', function (rows) {
         if (rows && rows.length) {
             $s.directions = [];
             $s.subRegions = [];
@@ -85,34 +84,35 @@ app.controller('MainPageCtrl', ['$scope', '$http', '$window', '$location', '$roo
             $s.popularDirections = [];
             $s.regions = [];
 
-            $s.vills = rows
-                .sort( (row1,row2) => {
-                    if (row1[FIELDS.STATUS] == row2[FIELDS.STATUS]) return 0;
-                    if (!row1[FIELDS.STATUS]) return 1;
-                    if (row1[FIELDS.STATUS].toLowerCase() == 'популярная') return -1;
-                    return 1;
-                })
-                .map(function (villa) {
-                    try {
-                        villa.fullUrl = 'http://' + villa.f8[0].f3[0].f8 + '/' + villa.url;
-                    } catch (E) {
-                        villa.fullUrl = 'http://arenda-vill.com/' + villa.url;
-                    }
+            $s.vills = rows.sort(function (row1, row2) {
+                if (row1[FIELDS.STATUS] == row2[FIELDS.STATUS]) return 0;
+                if (!row1[FIELDS.STATUS]) return 1;
+                if (row1[FIELDS.STATUS].toLowerCase() == 'популярная') return -1;
+                return 1;
+            }).map(function (villa) {
+                try {
+                    villa.fullUrl = 'http://' + villa.f8[0].f3[0].f8 + '/' + villa.url;
+                } catch (E) {
+                    villa.fullUrl = 'http://arenda-vill.com/' + villa.url;
+                }
 
-                    if (villa[FIELDS.DIRECTION]) {
-                        let direction = villa[FIELDS.DIRECTION][0];
+                if (villa[FIELDS.DIRECTION]) {
+                    (function () {
+                        var direction = villa[FIELDS.DIRECTION][0];
 
                         villa.direction = direction;
 
-                        let ind;
+                        var ind = void 0;
                         if (ind = $s.directionIds.indexOf(direction.field_value_id == -1)) {
                             $s.directions.push(direction);
                             $s.directionIds.push(direction.field_value_id);
                         } else direction = $s.directions[ind];
 
                         if (POPULAR_DIRECTIONS.indexOf(direction.f1.toLowerCase()) != -1) {
-                            let popDir;
-                            if (!(popDir = $s.popularDirections.filter(dir => dir.field_value_id == direction.field_value_id).pop())) {
+                            var popDir = void 0;
+                            if (!(popDir = $s.popularDirections.filter(function (dir) {
+                                return dir.field_value_id == direction.field_value_id;
+                            }).pop())) {
                                 popDir = direction;
                                 $s.popularDirections.push(direction);
                             }
@@ -121,35 +121,42 @@ app.controller('MainPageCtrl', ['$scope', '$http', '$window', '$location', '$roo
                         }
 
                         if (direction.f3) {
-                            let region = direction.f3[0];
-                            if (!$s.regions.some(reg => {
-                                if (reg.field_value_id == region.field_value_id) {
-                                    region = reg;
-                                    return true;
+                            (function () {
+                                var region = direction.f3[0];
+                                if (!$s.regions.some(function (reg) {
+                                    if (reg.field_value_id == region.field_value_id) {
+                                        region = reg;
+                                        return true;
+                                    }
+                                })) $s.regions.push(region);
+
+                                region.villas = region.villas || [];
+                                region.villas.push(villa);
+
+                                region.directions = region.directions || [];
+                                region.directions.push(direction);
+
+                                if (direction.f2) {
+                                    (function () {
+                                        var subRegion = direction.f2[0];
+                                        subRegion.region = region;
+                                        if (!$s.subRegions.some(function (reg) {
+                                            return reg.field_value_id == subRegion.field_value_id;
+                                        })) {
+                                            $s.subRegions.push(subRegion);
+                                        }
+                                    })();
                                 }
-                            })) $s.regions.push(region);
-
-                            region.villas = region.villas || [];
-                            region.villas.push(villa);
-
-                            region.directions = region.directions || [];
-                            region.directions.push(direction);
-
-                            if (direction.f2) {
-                                let subRegion = direction.f2[0];
-                                subRegion.region = region;
-                                if (!$s.subRegions.some(reg => reg.field_value_id == subRegion.field_value_id)) {
-                                    $s.subRegions.push(subRegion);
-                                }
-                            }
+                            })();
                         }
-                    }
+                    })();
+                }
 
-                    return villa;
-                });
+                return villa;
+            });
 
-            $s.regions.forEach(region => {
-                region.directionsStr = `направлен`;
+            $s.regions.forEach(function (region) {
+                region.directionsStr = "направлен";
                 switch (region.directions.length % 10) {
                     case 1:
                         region.directionsStr += 'ие';
@@ -163,7 +170,7 @@ app.controller('MainPageCtrl', ['$scope', '$http', '$window', '$location', '$roo
                         region.directionsStr += 'ий';
                 }
 
-                region.villasStr = `вилл`;
+                region.villasStr = "вилл";
                 switch (region.villas.length % 10) {
                     case 1:
                         region.villasStr += 'а';
@@ -176,52 +183,48 @@ app.controller('MainPageCtrl', ['$scope', '$http', '$window', '$location', '$roo
                     default:
                         region.villasStr += '';
                 }
-
-            })
-
-            $s.popularDirections.forEach(direction => {
-                $h.get('/api/data/table?t=428&'
-                    + direction.villas.map(villa => `where[f1]=${villa.field_value_id}`).join('&')
-                    + '&orderBy[f3]=desc&count=3')
-                    .success(rows => {
-                        direction.villas.forEach(villa => {
-                            rows.forEach(row => {
-                                if (row.f2 && row.f1.indexOf(villa.field_value_id) != -1) villa.image = row.f2;
-                            })
-                        })
-                    })
             });
 
-            $s.searchStuff = [].concat(
-                $s.vills
-                    .filter(v => v.url && v.f8 && v.f8[0].f3)
-                    .map(v => {
-                        return {
-                            name: v.name || v.f1,
-                            id: v.field_value_id,
-                            url: v.f8[0].f3[0].f8 + '/' + v.url
-                        }
-                    }),
-                $s.directions
-                    .filter(d => d.f3 && d.f6)
-                    .map(d => {
-                        return {
-                            name: d.f1,
-                            id: d.field_value_id,
-                            url: d.f3[0].f8 + '/' + d.f6
-                        }
-                    }),
-                $s.subRegions
-                    .filter(s => s.f2)
-                    .map(s => {
-                        return {
-                            name: s.f1,
-                            id: s.field_value_id,
-                            url: s.region.f8 + '/' + s.f2
-                        }
-                    })
-            ). reduce((stuff, item) => {
-                if (!stuff.some(s => s.url == item.url || s.id == item.id || s.name == item.name)) stuff.push(item);
+            $s.popularDirections.forEach(function (direction) {
+                $h.get('/api/data/table?t=428&' + direction.villas.map(function (villa) {
+                    return "where[f1]=" + villa.field_value_id;
+                }).join('&') + '&orderBy[f3]=desc&count=3').success(function (rows) {
+                    direction.villas.forEach(function (villa) {
+                        rows.forEach(function (row) {
+                            if (row.f2 && row.f1.indexOf(villa.field_value_id) != -1) villa.image = row.f2;
+                        });
+                    });
+                });
+            });
+
+            $s.searchStuff = [].concat($s.vills.filter(function (v) {
+                return v.url && v.f8 && v.f8[0].f3;
+            }).map(function (v) {
+                return {
+                    name: v.name || v.f1,
+                    id: v.field_value_id,
+                    url: v.f8[0].f3[0].f8 + '/' + v.url
+                };
+            }), $s.directions.filter(function (d) {
+                return d.f3 && d.f6;
+            }).map(function (d) {
+                return {
+                    name: d.f1,
+                    id: d.field_value_id,
+                    url: d.f3[0].f8 + '/' + d.f6
+                };
+            }), $s.subRegions.filter(function (s) {
+                return s.f2;
+            }).map(function (s) {
+                return {
+                    name: s.f1,
+                    id: s.field_value_id,
+                    url: s.region.f8 + '/' + s.f2
+                };
+            })).reduce(function (stuff, item) {
+                if (!stuff.some(function (s) {
+                    return s.url == item.url || s.id == item.id || s.name == item.name;
+                })) stuff.push(item);
                 return stuff;
             }, []);
             console.log($s.searchStuff);
@@ -235,7 +238,7 @@ app.controller('MainPageCtrl', ['$scope', '$http', '$window', '$location', '$roo
         $h.get('http://www.arenda-vill.com/api/data/table?t=345&where[field_value_id]=' + villa.f8[0].f3.replace(/\|/g, '') + '&field=f8').success(function (host) {
             window.location = 'http://' + host + '/' + villa.url;
         });
-        // window.location = 'http://' + villa.url; 
+        // window.location = 'http://' + villa.url;
     };
 
     $s.locateToAboutUs = function () {
@@ -258,8 +261,7 @@ app.controller('MainPageCtrl', ['$scope', '$http', '$window', '$location', '$roo
         // if ($s.selectedAddress !== "" && (villa.name.search(RegExp($s.selectedAddress, "i")) > -1 || villa.f8[0].f1.search(RegExp($s.selectedAddress, "i")) > -1)) {
         //     return true;
         // }
-        return villa.name.indexOf($s.selectedAddress) != -1
-            || (villa.direction && villa.direction.f1 && villa.direction.f1.indexOf($s.selectedAddress != -1));
+        return villa.name.indexOf($s.selectedAddress) != -1 || villa.direction && villa.direction.f1 && villa.direction.f1.indexOf($s.selectedAddress != -1);
     };
 
     $s.checkIfEnterKeyWasPressed = function (evt) {
@@ -413,5 +415,7 @@ $(document).ready(function () {
         }
     });
 });
+
+//# sourceMappingURL=main-compiled.js.map
 
 //# sourceMappingURL=main-compiled.js.map

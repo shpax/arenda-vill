@@ -18,7 +18,7 @@
     </div>
     <div id="content-2">
         <div class="block-info">
-            <h1 class="heading-title v-line">Аренда виллы {{pretext}} {{titleRegion}} в 3 шага</h1>
+            <h1 class="heading-title v-line">Аренда{{titleRegion.toLowerCase() != 'шале' ? ' виллы' : ''}} {{pretext}} {{titleRegion}} в 3 шага</h1>
             <ul class="cd-gallery">
                 <li>
                     <!--<a href="http://codyhouse.co/">-->
@@ -77,7 +77,7 @@
     <div id="content-1">
         <div class="block-width">
             <div class="block-info">
-                <h1 class="heading-title v-line">Аренда виллы {{pretext}} {{titleRegion}} в 3 шага</h1>
+                <h1 class="heading-title v-line">Аренда{{titleRegion.toLowerCase() != 'шале' ? ' виллы' : ''}} {{pretext}} {{titleRegion}} в 3 шага</h1>
                 <div class="w30">
                     <img src="/files/region/click_set_up-512.png"/>
                     <p>
@@ -91,7 +91,7 @@
                     <img src="/files/region/null.png"/>
                     <p>
                         Без комиссии<br>
-                        Без наценки
+                        Без наценки<br>
                         Без сервисного сбора
                     </p>
                     <span></span>
@@ -141,7 +141,7 @@
             <div id="liked" class="blocks">
                 <div class="w70" ng-repeat="villa in currentVills | limitTo: 3 : index ">
                     <p class="w70">
-                        <img src="{{'/api/data/table?t=428&amp;field=f2&amp;where[f1]=' + villa.field_value_id + '&amp;where[f3]=yes&amp;as=image&amp;count=1'}}" ng-click="moreInfo(villa)"/>
+                        <img src="{{villa.image}}" ng-click="moreInfo(villa)"/>
                         <span ng-class="villa.inFavourites ? 'active-like' : ''" ng-click="villa.inFavourites = setFavouriteVilla(villa.field_value_id, $event)"></span>
                     </p>
                     <div class="w30 villa-pointer" ng-click="moreInfo(villa)">

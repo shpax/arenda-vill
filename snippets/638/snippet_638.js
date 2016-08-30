@@ -1,9 +1,44 @@
+"use strict";
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+var _slicedToArray = function () {
+    function sliceIterator(arr, i) {
+        var _arr = [];var _n = true;var _d = false;var _e = undefined;try {
+            for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+                _arr.push(_s.value);if (i && _arr.length === i) break;
+            }
+        } catch (err) {
+            _d = true;_e = err;
+        } finally {
+            try {
+                if (!_n && _i["return"]) _i["return"]();
+            } finally {
+                if (_d) throw _e;
+            }
+        }return _arr;
+    }return function (arr, i) {
+        if (Array.isArray(arr)) {
+            return arr;
+        } else if (Symbol.iterator in Object(arr)) {
+            return sliceIterator(arr, i);
+        } else {
+            throw new TypeError("Invalid attempt to destructure non-iterable instance");
+        }
+    };
+}();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+    if (key in obj) {
+        Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });
+    } else {
+        obj[key] = value;
+    }return obj;
+}
 
 /**
  * Created by shpax on 11-Jul-16.
@@ -63,7 +98,7 @@ app.controller('villaCtrl', ['$scope', '$http', 'setCookieFact', '$sce', 'Databa
 
         villa.description = villa.description || '';
         if (villa.description.indexOf('</p>') != -1) {
-            let paragraphs = villa.description.split('</p>');
+            var paragraphs = villa.description.split('</p>');
             villa.description = paragraphs.shift() + '</p>';
             villa.additional_info = paragraphs.length ? paragraphs.join('</p>') : '';
         }
@@ -93,17 +128,17 @@ app.controller('villaCtrl', ['$scope', '$http', 'setCookieFact', '$sce', 'Databa
             var direction = villa.f8[0];
             localDatabase.request('/api/data/table?t=' + TABLES.VILLAS + '&where[f8]=' + direction.field_value_id + '&orderBy[f20]=desc&count=9', function (data) {
                 if (data && data.length) {
-                    $s.currentVills = data
-                        .filter(r => r.field_value_id != villa.field_value_id)
-                        .map(r => {
-                            r.priceStr = r.min_price && r.max_price ? `$${villa.min_price} — $${villa.max_price}` : 'по запросу'
-                            return r;
+                    $s.currentVills = data.filter(function (r) {
+                        return r.field_value_id != villa.field_value_id;
+                    }).map(function (r) {
+                        r.priceStr = r.min_price && r.max_price ? "$" + villa.min_price + " — $" + villa.max_price : 'по запросу';
+                        return r;
+                    });
+                    $s.currentVills.forEach(function (villa) {
+                        localDatabase.request('api/data/table?t=' + TABLES.IMAGES + '&where[f1]=' + villa.field_value_id + '&orderBy[f3]=desc&count=1', function (img) {
+                            if (img.length && img[0].f2) villa.img = img[0].f2;
                         });
-                    $s.currentVills.forEach(villa => {
-                        localDatabase.request('api/data/table?t=' + TABLES.IMAGES + '&where[f1]=' + villa.field_value_id + '&orderBy[f3]=desc&count=1', img => {
-                            if (img && img[0].f2) villa.img = img[0].f2;
-                        })
-                    })
+                    });
                 } else {
                     $s.currentVills = [];
                 }
@@ -206,48 +241,16 @@ app.controller('villaCtrl', ['$scope', '$http', 'setCookieFact', '$sce', 'Databa
     /// ****** RENDER ****** ///
 
     $s.prevVilla = function () {
-        var result = function () {
-            $s.currentVills.forEach(function (villa, index) {
-                if (villa.name == $s.villaInfo.name) {
-                    result = index;
-                }
-            });
-            return result;
-        }();
-
-        if (fav.classList.contains('active')) {
-            fav.classList.remove('active');
-        }
-
-        if (result == $s.currentVills.indexOf($s.currentVills[0])) {
-            $s.villaInfo = $s.currentVills[$s.currentVills.length - 1];
-            locateToNewUrl($s.villaInfo);
-        } else {
-            $s.villaInfo = $s.currentVills[result - 1];
-            locateToNewUrl($s.villaInfo);
-        }
+        if ($s.currentVills.length) $s.moreInfo($s.currentVills.reduce(function (target, current) {
+            if (+current.field_value_id > +target.field_value_id && current.field_value_id < $s.villaInfo.field_value_id) return current;
+            return target;
+        }, $s.currentVills[0]));
     };
     $s.nextVilla = function () {
-        var result = function () {
-            $s.currentVills.forEach(function (villa, index) {
-                if (villa.name == $s.villaInfo.name) {
-                    result = index;
-                }
-            });
-            return result;
-        }();
-
-        if (fav.classList.contains('active')) {
-            fav.classList.remove('active');
-        }
-
-        if (result == $s.currentVills.length - 1) {
-            $s.villaInfo = $s.currentVills[0];
-            locateToNewUrl($s.villaInfo);
-        } else {
-            $s.villaInfo = $s.currentVills[result + 1];
-            locateToNewUrl($s.villaInfo);
-        }
+        if ($s.currentVills.length) $s.moreInfo($s.currentVills.reduce(function (target, current) {
+            if (+current.field_value_id < +target.field_value_id && current.field_value_id > $s.villaInfo.field_value_id) return current;
+            return target;
+        }, $s.currentVills[0]));
     };
     $s.showVillaInfo = function (url) {
         window.location = 'http://' + url;
@@ -272,13 +275,7 @@ app.controller('villaCtrl', ['$scope', '$http', 'setCookieFact', '$sce', 'Databa
         }
     };
     $s.moreInfo = function (villa) {
-        var t = villa.name.split(" ").map(function (word) {
-            return word.charAt(0).toLowerCase() + word.slice(1);
-        });
-        var villaUrl = t.reduce(function (prev, curr) {
-            return prev + "-" + curr;
-        });
-        window.location = 'http://' + villa.url;
+        window.location = window.location.origin + "/" + villa.url;
     };
 
     $s.sendVillToHeader = function (villa) {
@@ -967,5 +964,7 @@ $('.availability-block.mobile button').click(function () {
         $('.mobile.form-block').removeClass('form-act');
     });
 });
+
+//# sourceMappingURL=snippet_638-compiled.js.map
 
 //# sourceMappingURL=snippet_638-compiled.js.map

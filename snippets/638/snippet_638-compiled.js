@@ -136,7 +136,7 @@ app.controller('villaCtrl', ['$scope', '$http', 'setCookieFact', '$sce', 'Databa
                     });
                     $s.currentVills.forEach(function (villa) {
                         localDatabase.request('api/data/table?t=' + TABLES.IMAGES + '&where[f1]=' + villa.field_value_id + '&orderBy[f3]=desc&count=1', function (img) {
-                            if (img && img[0].f2) villa.img = img[0].f2;
+                            if (img.length && img[0].f2) villa.img = img[0].f2;
                         });
                     });
                 } else {
@@ -241,48 +241,16 @@ app.controller('villaCtrl', ['$scope', '$http', 'setCookieFact', '$sce', 'Databa
     /// ****** RENDER ****** ///
 
     $s.prevVilla = function () {
-        var result = function () {
-            $s.currentVills.forEach(function (villa, index) {
-                if (villa.name == $s.villaInfo.name) {
-                    result = index;
-                }
-            });
-            return result;
-        }();
-
-        if (fav.classList.contains('active')) {
-            fav.classList.remove('active');
-        }
-
-        if (result == $s.currentVills.indexOf($s.currentVills[0])) {
-            $s.villaInfo = $s.currentVills[$s.currentVills.length - 1];
-            locateToNewUrl($s.villaInfo);
-        } else {
-            $s.villaInfo = $s.currentVills[result - 1];
-            locateToNewUrl($s.villaInfo);
-        }
+        if ($s.currentVills.length) $s.moreInfo($s.currentVills.reduce(function (target, current) {
+            if (+current.field_value_id > +target.field_value_id && current.field_value_id < $s.villaInfo.field_value_id) return current;
+            return target;
+        }, $s.currentVills[0]));
     };
     $s.nextVilla = function () {
-        var result = function () {
-            $s.currentVills.forEach(function (villa, index) {
-                if (villa.name == $s.villaInfo.name) {
-                    result = index;
-                }
-            });
-            return result;
-        }();
-
-        if (fav.classList.contains('active')) {
-            fav.classList.remove('active');
-        }
-
-        if (result == $s.currentVills.length - 1) {
-            $s.villaInfo = $s.currentVills[0];
-            locateToNewUrl($s.villaInfo);
-        } else {
-            $s.villaInfo = $s.currentVills[result + 1];
-            locateToNewUrl($s.villaInfo);
-        }
+        if ($s.currentVills.length) $s.moreInfo($s.currentVills.reduce(function (target, current) {
+            if (+current.field_value_id < +target.field_value_id && current.field_value_id > $s.villaInfo.field_value_id) return current;
+            return target;
+        }, $s.currentVills[0]));
     };
     $s.showVillaInfo = function (url) {
         window.location = 'http://' + url;
@@ -307,13 +275,7 @@ app.controller('villaCtrl', ['$scope', '$http', 'setCookieFact', '$sce', 'Databa
         }
     };
     $s.moreInfo = function (villa) {
-        var t = villa.name.split(" ").map(function (word) {
-            return word.charAt(0).toLowerCase() + word.slice(1);
-        });
-        var villaUrl = t.reduce(function (prev, curr) {
-            return prev + "-" + curr;
-        });
-        window.location = 'http://' + villa.url;
+        window.location = window.location.origin + "/" + villa.url;
     };
 
     $s.sendVillToHeader = function (villa) {
@@ -1002,6 +964,8 @@ $('.availability-block.mobile button').click(function () {
         $('.mobile.form-block').removeClass('form-act');
     });
 });
+
+//# sourceMappingURL=snippet_638-compiled.js.map
 
 //# sourceMappingURL=snippet_638-compiled.js.map
 

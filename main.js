@@ -4,77 +4,96 @@ var app = angular.module('villaApp', ["isteven-multi-select", "ngCookies", "ngRo
 // .run(['$rootScope', function($rootScope){
 //   console.log($rootScope);
 // }])
-  .factory("setCookieFact", ['$rootScope', '$cookies', function ($rootScope, $cookies) {
-var favToString;
-var iframeArrId = ['balkany-iframe', 'italiya-iframe', 'franciya-iframe', 'kariby-iframe', 'asia-iframe', 'ispaniya-iframe', 'main-iframe'];
-var cookieObj = {
-  vills: [],
-  villUrl: []
-},
-    inFavourites = false;
-cookieObj.getFavouritesVill = function () {
-  var favs = [];
-  if ($cookies.get("favourite")) {
-    // debugger;
-    favs = $cookies.get("favourite").split(',');
-  }
-  return favs;
-};
+.factory("setCookieFact", ['$rootScope', '$cookies', function ($rootScope, $cookies) {
+  var favToString;
+  var iframeArrId = ['balkany-iframe', 'italiya-iframe', 'franciya-iframe', 'kariby-iframe', 'asia-iframe', 'ispaniya-iframe', 'main-iframe'];
+  var cookieObj = {
+    vills: [],
+    villUrl: []
+  },
+      inFavourites = false;
+  cookieObj.getFavouritesVill = function () {
+    var favs = [];
+    if ($cookies.get("favourite")) {
+      // debugger;
+      favs = $cookies.get("favourite").split(',');
+    }
+    return favs;
+  };
 
-cookieObj.getVills = function () {
-  return cookieObj.vills;
-};
-cookieObj.getVillsUrl = function () {
-  return cookieObj.villUrl;
-};
-cookieObj.addVill = function (villa) {
-  cookieObj.vills.push(villa);
-};
-cookieObj.addVillUrl = function (villa) {
-  cookieObj.villUrl.push(villa);
-};
-cookieObj.clearVills = function () {
-  cookieObj.vills = [];
-};
+  cookieObj.getVills = function () {
+    return cookieObj.vills;
+  };
+  cookieObj.getVillsUrl = function () {
+    return cookieObj.villUrl;
+  };
+  cookieObj.addVill = function (villa) {
+    cookieObj.vills.push(villa);
+  };
+  cookieObj.addVillUrl = function (villa) {
+    cookieObj.villUrl.push(villa);
+  };
+  cookieObj.clearVills = function () {
+    cookieObj.vills = [];
+  };
 
-var favArr = cookieObj.getFavouritesVill();
-cookieObj.favCounter = favArr.length;
+  var favArr = cookieObj.getFavouritesVill();
+  cookieObj.favCounter = favArr.length;
 
-cookieObj.setFavouriteVilla = function (val) {
-  if (favArr && favArr[0] != "undefined") {
-    var add = true;
-    // check if id exist
-    favArr.forEach(function (item, index) {
-      if (item == val) {
-        favArr.splice(index, 1);
-        add = false;
-        inFavourites = false;
+  cookieObj.setFavouriteVilla = function (val) {
+    if (favArr && favArr[0] != "undefined") {
+      var add = true;
+      // check if id exist
+      favArr.forEach(function (item, index) {
+        if (item == val) {
+          favArr.splice(index, 1);
+          add = false;
+          inFavourites = false;
+        }
+      });
+      if (add) {
+        favArr.push(val);
+        inFavourites = true;
       }
-    });
-    if (add) {
-      favArr.push(val);
+      cookieObj.favCounter = favArr.length;
+
+      favToString = favArr.toString();
+      createIframes(favToString);
+      for (var i = 0; i < iframeArrId.length; i++) {
+        (function (param) {
+          var iframeId = document.getElementById(param);
+          iframeId.onload = function () {
+            //console.log("Айфрейм "+param+" загрузился");
+            iframeId.remove();
+          };
+        })(iframeArrId[i]);
+      }
+
+      $cookies.put("favourite", favArr.toString());
+    } else {
+      cookieObj.favCounter = 1;
+
+      favToString = favArr.toString();
+      createIframes(favToString);
+      for (var i = 0; i < iframeArrId.length; i++) {
+        (function (param) {
+          var iframeId = document.getElementById(param);
+          iframeId.onload = function () {
+            //  console.log("Айфрейм "+param+" загрузился");
+            iframeId.remove();
+          };
+        })(iframeArrId[i]);
+      }
+
+      $cookies.put("favourite", val);
       inFavourites = true;
     }
-    cookieObj.favCounter = favArr.length;
+    $rootScope.$broadcast('dataPassed');
 
-    favToString = favArr.toString();
-    createIframes(favToString);
-    for (var i = 0; i < iframeArrId.length; i++) {
-      (function (param) {
-        var iframeId = document.getElementById(param);
-        iframeId.onload = function () {
-          //console.log("Айфрейм "+param+" загрузился");
-          iframeId.remove();
-        };
-      })(iframeArrId[i]);
-    }
-
-    $cookies.put("favourite", favArr.toString());
-  } else {
-    cookieObj.favCounter = 1;
-
-    favToString = favArr.toString();
-    createIframes(favToString);
+    return inFavourites;
+  };
+  cookieObj.clearFavouriteVilla = function () {
+    createIframes('');
     for (var i = 0; i < iframeArrId.length; i++) {
       (function (param) {
         var iframeId = document.getElementById(param);
@@ -85,76 +104,55 @@ cookieObj.setFavouriteVilla = function (val) {
       })(iframeArrId[i]);
     }
 
-    $cookies.put("favourite", val);
-    inFavourites = true;
-  }
-  $rootScope.$broadcast('dataPassed');
+    $cookies.put("favourite", '');
+    // $cookies.remove("favourite");
+    $rootScope.$broadcast('dataPassed');
+  };
+  function createIframes(idVillsInString) {
 
-  return inFavourites;
-};
-cookieObj.clearFavouriteVilla = function () {
-  createIframes('');
-  for (var i = 0; i < iframeArrId.length; i++) {
-    (function (param) {
-      var iframeId = document.getElementById(param);
-      iframeId.onload = function () {
-        //  console.log("Айфрейм "+param+" загрузился");
-        iframeId.remove();
-      };
-    })(iframeArrId[i]);
+    var iframes = '<iframe style="display:none;" id="balkany-iframe" src="http://www.arenda-vill-balkany.com/fav?favourite=' + idVillsInString + '"></iframe><iframe style="display:none;" id="italiya-iframe" src="http://www.arenda-vill-italiya.com/fav?favourite=' + idVillsInString + '"></iframe><iframe style="display:none;" id="franciya-iframe" src="http://www.arenda-vill-franciya.com/fav?favourite=' + idVillsInString + '"></iframe><iframe style="display:none;" id="kariby-iframe" src="http://www.arenda-vill-kariby.com/fav?favourite=' + idVillsInString + '"></iframe><iframe style="display:none;" id="asia-iframe" src="http://www.arenda-vill-asia.com/fav?favourite=' + idVillsInString + '"></iframe><iframe style="display:none;" id="ispaniya-iframe" src="http://www.arenda-vill-ispaniya.com/fav?favourite=' + idVillsInString + '"></iframe><iframe style="display:none;" id="main-iframe" src="http://www.arenda-vill.com/fav?favourite=' + idVillsInString + '"></iframe>';
+    document.body.insertAdjacentHTML('beforeEnd', iframes);
   }
 
-  $cookies.put("favourite", '');
-  // $cookies.remove("favourite");
-  $rootScope.$broadcast('dataPassed');
-};
-function createIframes(idVillsInString) {
+  return cookieObj;
+}]).factory("SearchPageFact", ['$rootScope', function ($rootScope) {
+  var searchObj = {};
+  searchObj.searchValue = '';
+  searchObj.recreationStyle = [];
+  searchObj.selectedRegion = '';
+  searchObj.selectedPopularDirection = '';
 
-  var iframes = '<iframe style="display:none;" id="balkany-iframe" src="http://www.arenda-vill-balkany.com/fav?favourite=' + idVillsInString + '"></iframe><iframe style="display:none;" id="italiya-iframe" src="http://www.arenda-vill-italiya.com/fav?favourite=' + idVillsInString + '"></iframe><iframe style="display:none;" id="franciya-iframe" src="http://www.arenda-vill-franciya.com/fav?favourite=' + idVillsInString + '"></iframe><iframe style="display:none;" id="kariby-iframe" src="http://www.arenda-vill-kariby.com/fav?favourite=' + idVillsInString + '"></iframe><iframe style="display:none;" id="asia-iframe" src="http://www.arenda-vill-asia.com/fav?favourite=' + idVillsInString + '"></iframe><iframe style="display:none;" id="ispaniya-iframe" src="http://www.arenda-vill-ispaniya.com/fav?favourite=' + idVillsInString + '"></iframe><iframe style="display:none;" id="main-iframe" src="http://www.arenda-vill.com/fav?favourite=' + idVillsInString + '"></iframe>';
-  document.body.insertAdjacentHTML('beforeEnd', iframes);
-}
+  searchObj.getSearchValue = function (test) {
+    // console.log(test);
+    test(this.searchValue);
+  };
 
-return cookieObj;
-}])
-  .factory("SearchPageFact", ['$rootScope', function ($rootScope) {
-var searchObj = {};
-searchObj.searchValue = '';
-searchObj.recreationStyle = [];
-searchObj.selectedRegion = '';
-searchObj.selectedPopularDirection = '';
+  searchObj.setSearchValue = function (value) {
+    this.searchValue = value;
+    $rootScope.$broadcast('mainPageDataPassed');
+  };
 
-searchObj.getSearchValue = function (test) {
-  // console.log(test);
-  test(this.searchValue);
-};
+  // console.log(this.searchValue);
 
-searchObj.setSearchValue = function (value) {
-  this.searchValue = value;
-  $rootScope.$broadcast('mainPageDataPassed');
-};
+  return searchObj;
+}]).service("Database", ["$http", function ($h) {
+  localStorage.db = localStorage.db || '{}';
+  var db = JSON.parse(localStorage.db);
+  this.request = function (req, handler) {
 
-// console.log(this.searchValue);
+    // uncomment to use LS caching
 
-return searchObj;
-}])
-  .service("Database", ["$http", function ($h) {
-    localStorage.db = localStorage.db || '{}';
-    const db = JSON.parse(localStorage.db);
-    this.request = function(req, handler) {
+    // if (db[req]) {
+    //     handler(db[req]);
+    // } else
 
-        // uncomment to use LS caching
-
-        // if (db[req]) {
-        //     handler(db[req]);
-        // } else
-
-        $h.get(req).success(res => {
-            db[req] = res;
-            handler(db[req]);
-            // localStorage.setItem('db', JSON.stringify(db));
-        })
-    }
-  }]);
+    $h.get(req).success(function (res) {
+      db[req] = res;
+      handler(db[req]);
+      // localStorage.setItem('db', JSON.stringify(db));
+    });
+  };
+}]);
 
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
   // $locationProvider.html5Mode({
@@ -301,6 +299,8 @@ function getOffsetTop(elem) {
 //      console.log("Айфрейм загрузился");
 //      iframe.remove();
 /*  };*/
+
+//# sourceMappingURL=main-compiled.js.map
 
 //# sourceMappingURL=main-compiled.js.map
 
